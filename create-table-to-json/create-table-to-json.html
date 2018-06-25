@@ -1,0 +1,26 @@
+<div class="row py-3">
+   <section class="col-md-12">
+        <div class="card border-primary">
+            <div class="card-header">
+                <h3>ORACLE</h3>
+            </div>
+            <div class="card-body">
+                <uib-tabset type="pills" active="vm.active" justified="true">
+                    <uib-tab index="0" heading="Create Table"> <!-- Create table-->
+                        <ul  class="list-group" ng-if="vm.errors.length > 0">
+                            <li ng-repeat="e in vm.errors" class="list-group-item list-group-item-danger">
+                                <i class="fa fa-bell-o" aria-hidden="true"></i> <span ng-bind="e.message"></span>
+                            </li>
+                        </ul>
+                        <textarea ng-model="vm.createTableString" class="form-control form-control-sm" rows="10"></textarea>
+                    </uib-tab>
+                    <uib-tab index="1" heading="JSON">
+                        <pre ng-bind="vm.primaryKeys | json"></pre>
+                        <pre ng-bind="vm.data | json"></pre>
+                    </uib-tab>
+                </uib-tabset>
+                <button class="btn btn-primary btn-block" ng-click="vm.createTable(vm.createTableString)">Generate</button>
+            </div>
+        </div>
+    </section>            
+</div>

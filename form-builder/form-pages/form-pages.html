@@ -1,0 +1,25 @@
+<div ng-model="vmPage.data.pages" class="connected-pages" ui-sortable>
+    <div ng-repeat="(pageIndex, page) in vmPage.data.pages">
+        <div class="row">
+            <div class="col-md-10">
+                <strong><span ng-bind="page.name" class="text-danger"></span></strong>
+
+                <small ng-click="vmPage.editPageName[pageIndex] = !vmPage.editPageName[pageIndex]" class="badge btn-outline-danger"  style="cursor: pointer;">
+                    <i class="fa fa-edit fa-1x"></i> edit
+                </small>
+                <div ng-show="vmPage.editPageName[pageIndex]">
+                    <input type="text" class="form-control form-control-sm" placeholder="Page Name" ng-model="page.name"  ng-blur="vmPage.editPageName[pageIndex] = false">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="float-right">
+                    <small ng-click="vmPage.deletePage(pageIndex)" class="badge btn-outline-danger" style="cursor: pointer;">
+                        <i class="fas fa-window-close"></i>
+                        <strong>page <span ng-bind="pageIndex + 1"></span></strong>
+                    </small>
+                </div>
+            </div>
+        </div>
+        <form-rows></form-rows>
+    </div><!--/.ng-repeat-->
+</div>

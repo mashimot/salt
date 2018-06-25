@@ -1,0 +1,58 @@
+<div
+    name="formColumns"
+    class="row"
+    data-bootstrap-grid="{{ row.grid }}"
+    data-page-number="{{ pageIndex }}"
+    data-row-index="{{ rowIndex }}"
+    ng-model="row.columns"
+    ui-sortable="vmColumn.columnSortable">
+    <div 
+        ng-repeat="(columnIndex, column) in row.columns track by $index"        
+        class="col-md-{{ row.grid.trim().split(' ')[columnIndex] }}"
+    >
+        <small>
+            col-md-<span ng-bind="row.grid.trim().split(' ')[columnIndex]"></span>
+            <div class="border-bottom border-danger"></div>
+        </small>       
+        <div
+            ui-sortable="vmColumn.sortableOptions"
+            ng-model="column.data"
+            class="connected-drop-target-sortable connected-drop-target-tool m-2 apps-container"
+        >
+            <div
+                ng-repeat="(dataIndex, data) in column.data"
+                ng-class="{
+                    'faa-vertical': (vmColumn.showOptions === vmColumn.position)
+                }"
+                ng-mouseover="vmColumn.showOptions = ('' + pageIndex + rowIndex + columnIndex + dataIndex)"
+                ng-mouseleave="vmColumn.showOptions = -1;"
+            >
+                <span ng-bind="vmColumn.position = ('' + pageIndex + rowIndex + columnIndex + dataIndex)" style="display: none;"></span>
+                <div class="row">
+                    <div class="col-md-12 hvr-glow">
+                        <div ng-show="vmColumn.showOptions === vmColumn.position">
+                            <div class="row py-2">
+                                <h6 class="col">
+                                    <div class="float-left">
+                                        <span class="badge handle" style="cursor: pointer;"><i class="fa fa-arrows-alt" role="button"></i></span>
+                                        <span edit-form-builder-data data="data" type-event="edit" class="badge btn-outline-primary">
+                                            <i class="fa fa-edit fa-1x"></i> edit
+                                        </span>
+                                    </div>
+                                </h6>
+                                <h6 class="col unsortable">
+                                    <div class="float-right">
+                                        <span ng-click="column.data.splice(dataIndex, 1);" class="badge btn-outline-danger" style="cursor: pointer;">
+                                            <i class="fas fa-window-close"></i>
+                                        </span>
+                                    </div>
+                                </h6>                    
+                            </div>
+                        </div>
+                        <render-content content="data"></render-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

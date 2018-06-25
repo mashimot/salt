@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Salt</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="http://ianlunn.github.io/Hover/css/hover.css">
+    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.css">
+
+    <style type="text/css">
+        .highlight {
+            opacity: 0.4;
+        }
+        .sort-order:after {
+            content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+        }
+        .ui-placeholder-highlight:before {
+            content: 'Drop Zone';
+        }
+        .ui-placeholder-highlight {
+            font-size: 30px;
+            height: 70px;
+            text-align: center;
+        }
+        .sort-order.reverse:after {
+            content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+        }
+
+        .apps-container {
+            /*border: 2px dashed blue;
+            margin: 10px 10px 0 0;
+            padding: 5px;*/
+            min-width:200px;
+            min-height:50px;
+        }
+
+        .app {
+            width: 170px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background-color: #EA8A8A;
+
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            cursor: move;
+        }
+
+    </style>
+</head>
+<body>
+<div class="jumbotron">
+    <h1><img src="salt.png" style="width: 100px; height: 100px;" class="img-fluid"> SALT.</h1>
+    <h6>A tool for lazy Developers</h6>
+</div>
+<main role="main" ng-controller="CreateTableConverterController as vm">
+    <div class="container-fluid">
+        <create-table-to-json data="vm.data"></create-table-to-json>
+        <form-builder>
+            <div class="row">
+                <div class="col-md-3">
+                    <form-menu data="vm.data" tools="vm.tools" page-model="vm.pageModel"></form-menu>
+                </div>
+                <div class="col-md-9">
+                    <form-pages data="vm.data" pages="vm.data.pages"></form-pages>
+                </div>
+            </div>
+        </form-builder>
+        <section class="pt-3">
+            <form name="json" class="border border-primary">
+                <div ng-model="vm.data.pages" ng-repeat="(pageIndex, page) in vm.data.pages" class="px-2 py-2">
+                    <div class="">
+                        Page <span ng-bind="pageIndex + 1"></span>
+                        <hr/>
+                    </div>
+                    <div class="">
+                        <div ng-model="page.rows" ng-repeat="(rowIndex, row) in page.rows" ng-if="page.rows.length > 0">
+                            <section ng-repeat="(columnIndex, column) in row.columns track by $index" ng-if="row.columns.length > 0">
+                                <div ng-repeat="(dataIndex, d) in column.data" ng-if="d.html.category === 'form' && column.data.length > 0" class="row">
+                                    <div class="col-md-1">
+                                        <label class="btn btn-link btn-sm btn-block">
+                                            <input type="checkbox" ng-model="d.isPrimaryKey" class="checkbox" style="display: none;" />
+                                            <i class="fa fa-key" ng-show="d.isPrimaryKey"></i>
+                                            <i class="fa fa-ban text-danger" ng-show="!d.isPrimaryKey"></i>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <div class="input-group-append" ng-if="d.table.columnName.toLowerCase().indexOf('ind_') != -1 && d.table.columnName">
+                                                <button ng-click="vm.buscaDominio(d.table.columnName)" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" style="width: 100%;">
+                                                    <a class="dropdown-item" href="#" ng-show="vm.loading">
+                                                        <i class="fa fa-cog fa-1x fa-spin"></i> Loading...
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" ng-show="!vm.loading && vm.dominio.error.has">
+                                                        <span class="text-danger" ng-bind="vm.dominio.error.msg"></span>
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" ng-repeat="(dI, dom) in vm.dominio.data" ng-if="vm.dominio.data.length > 0">
+                                                        <span ng-bind="dom.val_dominio_item"></span> - <span ng-bind="dom.dsc_dominio_item"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="name{{ dataIndex }}" ng-model="d.table.columnName" class="form-control form-control-sm" required>
+                                        </div>
+                                        <div ng-messages="json['name' + dataIndex].$error" role="alert">
+                                            <div ng-message="required" class="text-danger">This is required!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" type="search" name="labelName{{ dataIndex }}" ng-model="d.html.label" class="form-control form-control-sm" required>
+                                            <div class="input-group-append">
+                                                <button ng-click="vm.corretorOrtografico(d.html.label, dataIndex, $event)" class="btn btn-outline-info btn-sm" type="button">
+                                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div ng-messages="json['labelName' + dataIndex].$error" role="alert">
+                                            <div ng-message="required" class="text-danger">This is required!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="input_type{{ dataIndex }}" ng-model="d.html.tag" class="form-control form-control-sm" required>
+                                            <option value="">Selecione</option>
+                                            <option value="{{ tag }}" ng-repeat="tag in vm.tags | orderBy: tag" ng-bind="tag"></option>
+                                        </select>
+                                        <div ng-messages="json['input_type' + dataIndex].$error" role="alert" required>
+                                            <div ng-message="required" class="text-danger">This is required!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select name="table_type{{ dataIndex }}" ng-model="d.table.type" class="form-control form-control-sm" required>
+                                            <option value="">Selecione</option>
+                                            <option value="{{ columnName.toLowerCase() }}" ng-repeat="(columnName , db) in vm.dbs" ng-bind="columnName.toUpperCase()"></option>
+                                        </select>                                    
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" ng-model="d.table.size" class="form-control form-control-sm">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="row">
+                                            <label ng-class="{'badge-danger': d.table.nullable, 'badge-default' : !d.table.nullable}" class="badge col-md-12" style="cursor: pointer;">
+                                                nullable? {{ d.table.nullable? 'No' : 'Yes' }}
+                                                <input type="checkbox" ng-model="d.table.nullable" class="checkbox" style="display: none;">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" ng-click="column.data.splice(dataIndex, 1)" class="btn btn-outline-danger btn-sm btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section class="py-2">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card h-100 border-primary">
+                                <div class="card-header">
+                                    <h1>MODEL</h1>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title" ng-bind="vm.model.name"></h4>
+                                    <div class="form-group">
+                                        <label>Table Name</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="vm.model.tableName" camel-case apply-to="vm.model.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Model Name</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="vm.model.name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sequence Number</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="vm.model.sequenceName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card h-100 border-primary">
+                                <div class="card-header">
+                                    <h1>VIEW</h1>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>View Title</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="vm.view.title" required>
+                                        <div ng-messages="vm.view.title.$error">
+                                            <div ng-message="required">This is required!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card h-100 border-primary">
+                                <div class="card-header">
+                                    <h1>CONTROLLER</h1>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title" ng-bind="vm.controller.name"></h4>
+                                    <div class="form-group">
+                                        <label>Controller Name</label>
+                                        <input type="text" class="form-control form-control-sm" ng-model="vm.controller.name">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <uib-tabset active="active" type="pills" justified="true">
+                        <uib-tab index="0" heading="Model - {{ vm.model.name }}">
+                            <sql-to-model vm-pages="vm.data.pages" model="vm.model"></sql-to-model>
+                        </uib-tab>
+                        <uib-tab index="1" heading="View" >
+                            <sql-to-view vm-data="vm.data" view="vm.view" preview="vm.preview" ></sql-to-view>
+                        </uib-tab>
+                        <uib-tab index="2" heading="Controller - {{ vm.controller.name }}">
+                            <sql-to-controller vm-pages="vm.data.pages" controller="vm.controller"></sql-to-controller>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </section>
+    </div><!--/.container-fluid-->
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-sanitize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-animate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.19.0/sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
+
+<script>
+    angular.module('app', ['new.app', 'ui.bootstrap', 'ui.sortable', 'render.nested.html', 'bind.html.compile', 'angular.filter', 'collection.service' , 'ngMessages', 'ngSanitize', 'ngAnimate']);
+    angular.module('new.app', []);
+</script>
+<!-- common directives -->
+<script src="common/directives/camelcase.directive.js"></script>
+<script src="common/directives/sum-validation.directive.js"></script>
+<script src="common/directives/render-nested-html.directive.js"></script>
+<script src="common/directives/bind-html-compile.directive.js"></script>
+
+<!-- common services -->
+<script src="common/services/render.view.service.js"></script>
+
+<script src="common/services/collection.service.js"></script>
+<script src="common/services/dominio.service.js"></script>
+<script src="common/services/render-html.service.js"></script>
+<script src="common/services/language-tool.service.js"></script>
+
+<script src="create-table-to-json/create-table-to-json.directive.js"></script>
+
+<script src="directives/create-table-to-model.directive.js"></script>
+<script src="directives/create-table-to-view.directive.js"></script>
+<script src="directives/create-table-to-controller.directive.js"></script>
+    
+<!-- Form Builder Controller -->
+<script src="form-builder/create-table-converter.controller.js"></script>
+
+<script src="form-builder/form-menu/form-menu.directive.js"></script>
+<script src="form-builder/form-pages/form-pages.directive.js"></script>
+<script src="form-builder/form-rows/form-rows.directive.js"></script>
+<script src="form-builder/form-columns/form-columns.directive.js"></script>
+
+<script src="form-builder/modal/edit-form-builder-data.directive.js"></script>
+<script src="form-builder/modal/config/config.choices.client.directive.js"></script>
+<script src="form-builder/modal/config/config.img.client.directive.js"></script>
+<script src="form-builder/modal/config/config.hide-when.client.directive.js"></script>
+<script src="form-builder/modal/config/config.title.client.directive.js"></script>
+<script src="form-builder/modal/config/config.general.client.directive.js"></script>
+<script src="form-builder/modal/config/config.table-builder.client.directive.js"></script>
+<script src="form-builder/modal/config/config.html-editor.client.directive.js"></script>
+<script src="form-builder/modal/tab.content.service.js"></script>
+
+<script src="form-builder/render-content.directive.js"></script>
+
+<script src="form-builder/services/form-data.service.js"></script>
+<script src="form-builder/services/html-elements.service.js"></script>
+
+<script type="text/ng-template" id="dialog1.tmpl.html">
+    <div class="modal-corretor-ortografia">
+        <div class="modal-header">
+            <div class="text-left">
+                <h1 >Correção Ortográfica</h1>
+            </div>
+            <div class="text-center">
+                <button type="button" ng-click="corretorOrtografico()" class="btn btn-outline-info">
+                    <i class="fa fa-book"></i>
+                </button>
+            </div>
+            <div class="text-right">
+                <button type="button" class="btn btn-outline-danger">
+                    <i class="fa fa-close"></i>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div ng-if="isLoading" class="text-center" style="margin-top: 40px;">
+                <i class="fa fa-cog fa-spin fa-2x"></i> Loading...
+            </div>
+            <div class="panel" ng-if="!isLoading">
+                <div class="panel-heading">
+                    <!--p><pre>{{ result }}</pre></p-->
+                </div>
+                <div class="panel-body">
+                    <div class="alert" ng-class="{ 'alert-danger': res.langTool.matches.length > 0, 'alert-success': res.langTool.matches.length <= 0 }" ng-repeat="(key, res) in result" ng-model="result">
+                        <div class="form-group">
+                            <label for="text-{{ key }}"><span ng-bind="res.text"></span></label>
+                            <div class="input-group">
+                                <input type="text" ng-model="res.text" ng-change="split(res.text)" id="text-{{ key }}" class="form-control form-control-sm">
+                                <div class="input-group-append">
+                                    <button ng-click="atualizar(res)" class="btn btn-info btn-sm" type="button">
+                                        Atualizar <i class="fa fa-book fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
+                                <label>{{ match.message }}</label>
+                                <select multiple class="form-control">
+                                    <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-if="!isLoading">
+                <button type="button" class="btn btn-primary" ng-click="atualizar()">Salvar Mudanças</button>
+                <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- templates -->
+<script type="text/ng-template" id="render-content.html">
+        <!--CATEGORY: TABLES-->
+        <section ng-if="d.html.category === 'table'">
+            <div ng-if="d.html.fields.length > 0">
+                <table class="table table-stripped">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="(key, field) in d.html.fields[0]">
+                                <span ng-bind="key"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="field in d.html.fields track by $index" ng-model="content.html.fields">
+                            <td ng-repeat="(key, f) in d.html.fields[0]" >
+                                <span ng-bind="field[key]"></span>
+                            <td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h6 class="alert alert-danger" ng-if="d.html.fields.length <= 0">
+                <i class="fa fa-exclamation-triangle"></i> Empty Table
+            </h6>
+        </section>
+        <!--CATEGORY: FORMATTING-->
+        <section ng-if="d.html.category === 'formatting'">
+            <legend ng-if="d.html.tag === 'legend'" ng-bind="d.html.text"></legend>
+        </section>
+
+        <!--CATEGORY: HEADINGS-->
+        <section ng-if="d.html.category === 'headings'">
+            <div ng-class="{ '{{ d.html.class }}': d.html.class.trim() !== '' }">
+                <h1 ng-if="d.html.tag === 'h1'" ng-bind="d.html.text"></h1>
+                <h2 ng-if="d.html.tag === 'h2'" ng-bind="d.html.text"></h2>
+                <h3 ng-if="d.html.tag === 'h3'" ng-bind="d.html.text"></h3>
+                <h4 ng-if="d.html.tag === 'h4'" ng-bind="d.html.text"></h4>
+                <h5 ng-if="d.html.tag === 'h5'" ng-bind="d.html.text"></h5>
+                <h6 ng-if="d.html.tag === 'h6'" ng-bind="d.html.text"></h6>
+                <legend ng-if="d.html.tag === 'legend'" ng-bind="d.html.text"></legend>
+            </div>
+        </section>
+
+        <section ng-if="d.html.category === 'html'" class="form-group html-form">
+            <span ng-bind-html="d.html.data" ng-if="d.html.tag == 'html'"></span>
+            <img src="{{ d.html.src }}" ng-if="d.html.tag == 'image'" class="img-fluid">
+        </section>
+
+        <!--CATEGORY: FORM-->
+        <section ng-if="d.html.category === 'form'" class="form-group html-form">
+            <!abel for="i_{{ d.table.columnName }}">{{ d.html.label }}</label>
+            <label ng-class="{'badge-success': d.table.nullable, 'badge-danger' : !d.table.nullable}" class="badge" style="cursor: pointer;">
+                <input type="checkbox" ng-model="d.table.nullable" class="checkbox" style="display: none;">
+                <span ng-if="d.table.nullable">required</span>
+                <span ng-if="!d.table.nullable">not required</span>
+            </label>
+            <!--FILe-->
+            <div ng-if="d.html.tag == 'file'">
+                <span class="btn btn-primary btn-block">
+                    <input type="file" id="i_{{ d.table.columnName }}">
+                </span>
+            </div>
+
+            <!--DATE-->
+            <div ng-if="d.html.tag == 'date'">
+                <input type="date" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control datepicker" />
+            </div>
+            <!--NUMBER-->
+            <div ng-if="d.html.tag == 'number'">
+                <input type="number" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control" />
+            </div>
+            <!--TEXT-->
+            <div ng-if="d.html.tag == 'text'">
+                <input type="text" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control" />
+            </div>
+            <!--TEXTAREA-->
+            <div ng-if="d.html.tag == 'textarea'">
+                <textarea id="i_{{ d.table.columnName }}" name="{{ d.table.columnName }}" class="form-control">{{ d.html.tag }} | {{ d.table.type }}</textarea>
+            </div>
+            <!--SELECT-->
+            <div ng-if="d.html.tag == 'select'">
+                <div ng-class="{ 'is-invalid': !d.html.elements.length <= 0 }">
+                    <select id="i_{{ d.table.columnName }}" class="form-control" ng-class="{ 'is-invalid': !d.html.elements, 'is-invalid': d.html.elements.length <= 0 }">
+                        <option value="">Selecione um Valor</option>
+                        <option ng-repeat="content in d.html.elements" value="{{ content.value }}">{{ content.text }}</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        <i class="fa fa-exclamation-triangle"></i> Empty Options
+                    </div>
+                </div>
+            </div>
+            <!--RADIO-->
+            <div ng-if="d.html.tag == 'radio'">
+                <div ng-repeat="content in d.html.elements" ng-model="d.html.elements" class="radio">
+                    <label>
+                        <input type="radio" name="{{ d.table.columnName }}" value="{{ content.value }}" class="radio" ng-class="{ 'is-invalid': !d.html.elements }"> {{ content.text }}
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    <i class="fa fa-exclamation-triangle"></i> Empty Radio
+                </div>
+            </div>
+            <!--CHECKBOX-->
+            <div ng-if="d.html.tag == 'checkbox'" ng-class="{ 'is-invalid': !d.html.elements }">
+                <div ng-repeat="content in d.html.elements" ng-model="d.html.elements" class="checkbox">
+                    <label>
+                        <input type="checkbox" name="{{ d.table.columnName }}" value="{{ content.value }}" class="checkbox" ng-class="{ 'is-invalid': !d.html.elements }"> {{ content.text }}
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    <i class="fa fa-exclamation-triangle"></i> Empty Checkbox
+                </div>                
+            </div>                                                
+        </section>
+</script>
+</body>
+</html>
