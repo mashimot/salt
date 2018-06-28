@@ -6,10 +6,10 @@
     <title>Salt</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://ianlunn.github.io/Hover/css/hover.css">
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.css">
     <style type="text/css">
         .highlight {
             opacity: 0.4;
@@ -227,7 +227,7 @@
                             <sql-to-model vm-pages="vm.data.pages" model="vm.model"></sql-to-model>
                         </uib-tab>
                         <uib-tab index="1" heading="View" >
-                            <sql-to-view vm-data="vm.data" view="vm.view" preview="vm.preview" ></sql-to-view>
+                            <sql-to-view vm-data="vm.data" view="vm.view" vm-pages="vm.data.pages" preview="vm.preview" ></sql-to-view>
                         </uib-tab>
                         <uib-tab index="2" heading="Controller - {{ vm.controller.name }}">
                             <sql-to-controller vm-pages="vm.data.pages" controller="vm.controller"></sql-to-controller>
@@ -248,6 +248,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-sanitize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-animate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.0/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -255,7 +256,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
 
 <script>
-    angular.module('app', ['new.app', 'ui.bootstrap', 'ui.sortable', 'render.nested.html', 'bind.html.compile', 'angular.filter', 'collection.service' , 'ngMessages', 'ngSanitize', 'ngAnimate']);
+    angular.module('app', ['new.app', 'ui-notification', 'blocks.logger', 'ui.bootstrap', 'ui.sortable', 'render.nested.html', 'bind.html.compile', 'angular.filter', 'collection.service' , 'ngMessages', 'ngSanitize', 'ngAnimate']);
     angular.module('new.app', []);
 </script>
 <!-- common directives -->
@@ -266,7 +267,7 @@
 
 <!-- common services -->
 <script src="common/services/render.view.service.js"></script>
-
+<script src="common/services/logger.service.js"></script>
 <script src="common/services/collection.service.js"></script>
 <script src="common/services/dominio.service.js"></script>
 <script src="common/services/render-html.service.js"></script>

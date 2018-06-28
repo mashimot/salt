@@ -5,9 +5,9 @@
     angular.module('new.app')
         .controller('CreateTableConverterController', CreateTableConverterController);
 
-    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService', 'renderView'];
+    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService', 'renderView', 'Logger'];
 
-    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView){
+    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView, Logger){
         var vm = this;
 
         vm.editPageName = {};

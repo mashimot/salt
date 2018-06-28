@@ -2,9 +2,9 @@
 	angular.module('app')
 	.directive('formColumns', formColumns);
 	
-	formColumns.$inject = [];
+	formColumns.$inject = ['Logger'];
 
-	function formColumns(){
+	function formColumns(Logger){
 		return {
 			//transclude: true,
 			restrict: "E",
@@ -18,8 +18,11 @@
 		        vmColumn.sortableOptions = {
 		            connectWith: '.connected-drop-target-sortable',
 		            placeholder: 'card border border-primary ui-placeholder-highlight',
-		            handle: '.handle',
-		            cancel: ".unsortable"
+		            //handle: '.handle',
+		            cancel: ".unsortable",
+                    stop: function(event, ui){
+                        Logger.success('Data successfully updated!');
+                    }
 		        };
 
 		        vmColumn.columnSortable = {
@@ -42,13 +45,14 @@
 
 		                var newGrid = arrGrid.join(' ');
 		                console.log(newGrid);
-		                if(grid != newGrid){
+		                if(grid !== newGrid){
 		                	vmPage.data.pages[pageNumber].rows[rowIndex].grid = newGrid;
 		                }
 		            },
 		            stop: function(event, ui){
 		                ui.placeholder.removeClass();
-		            }
+                        Logger.success('Column successfully updated!');
+                    }
 		        };			        
 			},
 			controllerAs: 'vmColumn'

@@ -1,12 +1,13 @@
 <div
     name="formColumns"
-    class="row"
     data-bootstrap-grid="{{ row.grid }}"
     data-page-number="{{ pageIndex }}"
     data-row-index="{{ rowIndex }}"
     ng-model="row.columns"
-    ui-sortable="vmColumn.columnSortable">
-    <div 
+    ui-sortable="vmColumn.columnSortable"
+    class="row"
+>
+    <div
         ng-repeat="(columnIndex, column) in row.columns track by $index"
         class="col-md-{{ row.grid.trim().split(' ')[columnIndex] }}"
     >
@@ -34,7 +35,7 @@
                         <div class="row py-2">
                             <h6 class="col">
                                 <div class="float-left">
-                                    <span class="badge handle" style="cursor: pointer;"><i class="fa fa-arrows-alt" role="button"></i></span>
+                                    <!--span class="badge handle" style="cursor: pointer;"><i class="fa fa-arrows-alt" role="button"></i></span-->
                                     <span edit-form-builder-data data="data" type-event="edit" class="badge btn-outline-primary">
                                         <i class="fa fa-edit fa-1x"></i> edit
                                     </span>

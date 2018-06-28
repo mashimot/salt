@@ -8,9 +8,11 @@ angular.module('app')
 
         var name        = '';
         var toUpperName = '';
-        var nullable     = false;
+        var nullable    = false;
         var labelName   = '';
         var inputType   = '';
+        var htmlData    = '';
+        var imgSrc      = '';
         var elements    = [];
 
 		var service = {
@@ -21,12 +23,14 @@ angular.module('app')
 		return service;
 
         function setParams(d){
-        	name        = d.table.columnName;
-            nullable     = d.table.nullable;
+            name        = typeof d.table.columnName === 'undefined'? '' : d.table.columnName;
+            nullable    = typeof d.table.nullable === 'undefined'? '' : d.table.nullable ;
             toUpperName = name.toUpperCase();
-        	labelName   = d.html.label;
-        	inputType   = d.html.tag;
-            elements    = d.html.elements;
+            labelName   = typeof d.html.label === 'undefined'? '' : d.html.label;
+            htmlData    = typeof d.html.data === 'undefined'? '' : d.html.data;
+            imgSrc      = typeof d.html.src === 'undefined'? '' : d.html.src;
+            inputType   = typeof d.html.tag === 'undefined'? '' : d.html.tag;
+            elements    = typeof d.html.elements === 'undefined'? [] : d.html.elements ;
         }
 
         function render(tblData, frameworkName){
@@ -56,12 +60,14 @@ angular.module('app')
         function _default(){
 
             return {
+                "html": `${htmlData}`,
+                "image": `<img src="${imgSrc}" class="img-fluid">`,
                 "textarea": 
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group" id="div_${name}">
                         <label for="txt_${name}">${labelName}</label>
-                        <textarea class="form-control" name="${name}" id="txt_${name}" disabled ${ nullable? `` : `required` }></textarea>
+                        <textarea class="form-control" name="${name}" id="txt_${name}"  ${ nullable? `` : `required` }></textarea>
                     </div>                   
                     <!-- FIM ${toUpperName} -->
                     ` 
@@ -71,7 +77,7 @@ angular.module('app')
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
-                        <select class="form-control" name="${name}" id="i_${name}" disabled ${ nullable? `` : `required` }>
+                        <select class="form-control" name="${name}" id="i_${name}"  ${ nullable? `` : `required` }>
                             <option value="">Selecione</option>
                             ${elements.map( element => `<option value="${element.value}">${element.text}</option>` ).join('')}
                         </select>
@@ -104,7 +110,7 @@ angular.module('app')
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control" name="${name}" id="i_${name}" value="" readonly ${ nullable? `` : `required` }>
+                        <input type="text" class="form-control" name="${name}" id="i_${name}" value=""  ${ nullable? `` : `required` }>
                     </div>                
                     <!-- FIM ${toUpperName} -->
                     `
@@ -124,7 +130,7 @@ angular.module('app')
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control date" name="${name}" id="i_${name}" value="" readonly ${ nullable? `` : `required` }>
+                        <input type="text" class="form-control date" name="${name}" id="i_${name}" value="" ${ nullable? `` : `required` }>
                     </div>
                     <!-- FIM ${toUpperName} -->
                     `
@@ -134,22 +140,22 @@ angular.module('app')
         function laravel(){
 
             return {
-                "textarea": 
+                "textarea":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
                         <label for="txt_${name}">${labelName}</label>
-                        <textarea class="form-control" name="${name}" id="txt_${name}" disabled>{{ (old('${name}') != null) ? old('${name}') : '$formulario->${name}' }}</textarea>
+                        <textarea class="form-control" name="${name}" id="txt_${name}" >{{ (old('${name}') != null) ? old('${name}') : '$formulario->${name}' }}</textarea>
                     </div>                   
                     <!-- FIM ${toUpperName} -->
-                    ` 
+                    `
                 ,
-                "select":  
+                "select":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
-                        <select class="form-control" name="${name}" id="i_${name}" disabled required>
+                        <select class="form-control" name="${name}" id="i_${name}"  required>
                             <option value="">Selecione</option>
                             ${complemento}
                         </select>
@@ -157,7 +163,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "text": 
+                "text":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
@@ -167,7 +173,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "number": 
+                "number":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
@@ -177,7 +183,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "date": 
+                "date":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
@@ -190,7 +196,7 @@ angular.module('app')
         }
         function vuejs(){
             return {
-                "textarea": 
+                "textarea":
                     `
                     <!-- INICIO ${toUpperName} -->
                         <div class="form-group ${colValue}" id="div_${name}">
@@ -199,9 +205,9 @@ angular.module('app')
                             <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                         </div>
                     <!-- FIM ${toUpperName} -->
-                    ` 
+                    `
                 ,
-                "select":  
+                "select":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue}" id="div_${name}">
@@ -217,7 +223,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "text": 
+                "text":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue}" id="div_${name}">
@@ -228,7 +234,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "number": 
+                "number":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue}" id="div_${name}">
@@ -239,7 +245,7 @@ angular.module('app')
                     <!-- FIM ${toUpperName} -->
                     `
                 ,
-                "date": 
+                "date":
                     `
                     <!-- INICIO ${toUpperName} -->
                     <div class="form-group ${colValue}" id="div_${name}">

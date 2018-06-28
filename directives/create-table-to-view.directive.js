@@ -18,8 +18,9 @@
             restrict: 'E',
             scope: {
                 data       : '=vmData',
+                pages      : '=vmPages',
                 content    : '=preview',
-                view       : '=',
+                view       : '='
             },
             controller: controller,
             link: link
@@ -52,13 +53,43 @@
 
         function link(scope, elem, attr){
             scope.$watch('frontEnd.selected', function(nV, oV){
-                /*var data = angular.copy(scope.data);
-                RenderHtml.setParams(huehue);
-                scope.content = RenderHtml.getByType(0)['text'];
-                renderView.getView(data).then(function(r){
-                    //console.log(r); 
-                    scope.content = r;
-                });*/
+                scope.$watch('pages', function(pages){
+                    var fullHtml = '';
+                    if(pages.length > 0 && pages.length !== undefined){
+                        for(var k = 0; k < pages.length; k++){
+                            var pageHtml = '';
+                            var rowHtml = '';
+                            var rows = pages[k].rows;
+                            if(rows.length > 0){
+                                for(var i = 0; i < rows.length; i++){
+                                    var row = rows[i];
+                                    var columns = row.columns;
+                                    var grid = row.grid.split(' ');
+                                    var columnHtml = '';
+                                    if(columns.length > 0) {
+                                        for (var j = 0; j < columns.length; j++) {
+                                            var column = columns[j];
+                                            var data = column.data;
+                                            var dataHtml = '';
+                                            if(data.length > 0){
+                                                for(var m = 0; m < data.length; m++){
+                                                    var d = data[m];
+                                                    RenderHtml.setParams(d);
+                                                    dataHtml += RenderHtml.getByType(0)[d.html.tag];
+                                                }
+                                            }
+                                            columnHtml += `\n\t\t<div class="col-md-${grid[j]}">\n\t\t\t${dataHtml}\n\t\t</div>`;
+                                        }
+                                    }
+                                    rowHtml += `\n\t<div class="row">${columnHtml}\n\t</div>`;
+                                }
+                            }
+                            pageHtml += `<div class="page-${k}">${rowHtml}\n</div>\n`;
+                            fullHtml += pageHtml;
+                        }
+                    }
+                    scope.content = fullHtml;
+                }, true);
             });
             scope.preview = function(){
                 var pages = angular.copy(scope.pages);
