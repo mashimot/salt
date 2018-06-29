@@ -63,52 +63,6 @@
         }
       ],
       "name": "Salt - A tool for Lazy Developer"
-    },
-    {
-      "rows": [
-        {
-          "grid": "4 4 4",
-          "columns": [
-            {
-              "data": [
-                {
-                  "html": {
-                    "tag": "html",
-                    "category": "html",
-                    "data": "<div class=\"text-center\"><a href=\"https://github.com/mashimot\" class=\"hvr-grow hvr-float-shadow \" target=\"_blank\"><i class=\"fab fa-github fa-10x text-dark\"></i></a></div>"
-                  },
-                  "table": {}
-                }
-              ]
-            },
-            {
-              "data": [
-                {
-                  "html": {
-                    "tag": "html",
-                    "category": "html",
-                    "data": "<div class=\"text-center\"><a href=\"https://www.linkedin.com/in/daniel-hashimoto-b724b314a/\" target=\"_blank\" class=\"hvr-grow hvr-float-shadow\"><i class=\"fab fa-linkedin fa-10x text-info\"></i></a></div>"
-                  },
-                  "table": {}
-                }
-              ]
-            },
-            {
-              "data": [
-                {
-                  "html": {
-                    "tag": "html",
-                    "category": "html",
-                    "data": "<div class=\"text-center\"><a href=\"https://www.facebook.com/linkhashimoto\" target=\"_blank\" class=\"hvr-grow hvr-float-shadow\"><i class=\"fab fa-facebook-f fa-10x text-primary\"></i></a></div>"
-                  },
-                  "table": {}
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "name": "My Social Media"
     }
   ],
   "type": "tab"

@@ -11,8 +11,10 @@ angular.module('app')
         var nullable    = false;
         var labelName   = '';
         var inputType   = '';
+        var fields      = [];
         var htmlData    = '';
         var imgSrc      = '';
+        var text        = '';
         var elements    = [];
 
 		var service = {
@@ -30,6 +32,8 @@ angular.module('app')
             htmlData    = typeof d.html.data === 'undefined'? '' : d.html.data;
             imgSrc      = typeof d.html.src === 'undefined'? '' : d.html.src;
             inputType   = typeof d.html.tag === 'undefined'? '' : d.html.tag;
+            text        = typeof d.html.text === 'undefined'? '' : d.html.text;
+            fields      = typeof d.html.fields === 'undefined'? [] : d.html.fields;
             elements    = typeof d.html.elements === 'undefined'? [] : d.html.elements ;
         }
 
@@ -61,6 +65,16 @@ angular.module('app')
 
             return {
                 "html": `${htmlData}`,
+                "legend": `<legend>${text}</legend>`,
+                "h1": `<h1>${text}</h1>`,
+                "h2": `<h2>${text}</h2>`,
+                "h3": `<h3>${text}</h3>`,
+                "h4": `<h4>${text}</h4>`,
+                "h5": `<h5>${text}</h5>`,
+                "h6": `<h6>${text}</h6>`,
+                "table": `<table class="table">
+                    ${fields.map((field, key) => (`<tr>${Object.keys(fields[0]).map((f, k) => `<td>${field[f]}</td>`).join('')}</tr>`)).join('')}
+                </table>`,
                 "image": `<img src="${imgSrc}" class="img-fluid">`,
                 "textarea": 
                     `

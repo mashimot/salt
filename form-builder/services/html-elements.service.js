@@ -113,7 +113,7 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'headings',
@@ -121,7 +121,7 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'headings',
@@ -129,7 +129,7 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'headings',
@@ -137,7 +137,7 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'headings',
@@ -145,7 +145,7 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'headings',
@@ -153,14 +153,14 @@
                     text: 'Add Your Title',
                     class: 'text-center'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'formatting',
                     tag: 'legend',
                     text: 'Legend text'
                 },
-                table: null
+                table: {}
             },{
                 html: {
                     category: 'table',
@@ -186,7 +186,7 @@
                         }
                     ]
                 },
-                table: null
+                table: {}
             }];
         }
     }
