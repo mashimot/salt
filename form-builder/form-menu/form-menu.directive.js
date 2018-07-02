@@ -35,20 +35,6 @@
             vmMenu.data.pages = [];
         }
         
-        vmMenu.createTable = function(string){
-            //var decimalRegex = /^[0-9]*([,][0-9]*)?$/; // permite apenas números decimais
-            var createTableToJson = new CreateTableToJson(string, 'oracle');
-            createTableToJson.convert();
-            var data = createTableToJson.getData();
-            vmMenu.errors = data.errors;
-            if(data.errors.length <= 0){
-                vmMenu.data.pages.push({
-                    rows: data.pages[0].rows,
-                    name: data.pages[0].name
-                });
-            }
-        };
-
         vmMenu.sortableNewPage = {
             placeholder: 'card border border-primary ui-placeholder-highlight',
             connectWith: '.connected-pages',

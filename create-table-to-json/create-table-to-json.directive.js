@@ -1,31 +1,25 @@
 class CreateTableToJson {
 
     constructor(string = '', dbType = 'oracle'){
-        this._string      = string;
-        this._nullable     = false;
-        this._isPrimaryKey= false;
-        this._inputType   = '';
-        this._labelName   = '';
-        this._dataType    = '';
-        this._size        = '';
-        this._index       = 2;
-        var dataBase      = this.getAllowedTypes()[dbType];
-        if(dbType === 'mysql'){
-            dataBase = {};
-            angular.forEach(this.getAllowedTypes()[dbType], function(data, idx){
-                angular.forEach(data, function(d, i){
-                    dataBase[i] = d;
-                });
-            });
-        }
-        this._dataBase   = dataBase;
-        this._data       = {
+        this._string        = string;
+        this._nullable      = false;
+        this._isPrimaryKey  = false;
+        this._inputType     = '';
+        this._columnName    = '';
+        this._labelName     = '';
+        this._dataType      = '';
+        this._size          = '';
+        this._index         = 2;
+        this._dataBase      = this.getAllowedTypes()[dbType];
+        this._data          = [];
+        /*this._data          = {
             name: '',
             pages: [],
-            type: 'tab',
-            errors: []
-        };
+            type: 'tab'
+        };*/
+        this._errors = [];
     }
+
     getDataTypeAndSize(str){
         //var secondMatch = str[1].replace(/,/g, '');
         var RegexValBtwParen = /\(([^)]*)\)[^(]*$/;
@@ -52,14 +46,14 @@ class CreateTableToJson {
             var n = hasValBtwParen[1];
             if(n.indexOf('.') !== -1 || n.indexOf(',') !== -1){
                 if(!this.isFloat((n))){
-                    this._data.errors.push({
-                        message: `\`${this._name}\` must be a number!`
+                    this._errors.push({
+                        message: `\`${this._columnName}\` must be a number!`
                     });
                 }
             } else {
                 if(!this.isInt((n))){
-                    this._data.errors.push({
-                        message: `\`${this._name}\` must be a number!`
+                    this._errors.push({
+                        message: `\`${this._columnName}\` must be a number!`
                     });
                 }
             }
@@ -67,11 +61,12 @@ class CreateTableToJson {
         }
 
         var database  = this._dataBase[dataType.toUpperCase()];
+        console.log(database);
         if (typeof database !== 'undefined' && dataType !== '') {
             inputType = database;
         } else {
-            this._data.errors.push({
-                message: `\`${dataType}\` does not exists! ${this._name}`
+            this._errors.push({
+                message: `\`${dataType}\` does not exists! ${this._columnName}`
             });
         }
         this._dataType  = dataType;
@@ -111,8 +106,8 @@ class CreateTableToJson {
             var nextValue = '';
             var prevValue = '';
             if(typeof allowed[currentStr] === 'undefined'){
-                this._data.errors.push({
-                    message: 'You have an error in your SQL syntax: ' + this._name + ' - ' + currentStr
+                this._errors.push({
+                    message: 'You have an error in your SQL syntax: ' + this._columnName + ' - ' + currentStr
                 });
             } else {
                 var index = i + 1;
@@ -138,8 +133,8 @@ class CreateTableToJson {
                 }
                 value += `${prevValue} ${currentStr} ${nextValue}`;
                 if(hasError && value !== ''){
-                    this._data.errors.push({
-                        message: `error: \`${currentStr}\` maybe \`${allowed[currentStr].correct}\` ? at line: ${this._name} `
+                    this._errors.push({
+                        message: `error: \`${currentStr}\` maybe \`${allowed[currentStr].correct}\` ? at line: ${this._columnName} `
                     });
                 }
             }
@@ -157,33 +152,32 @@ class CreateTableToJson {
         this._index = 2;
     }
     convert(){
-        var data        = [];
         var split       = this._string.trim().split("\n");
         var sptlength   = split.length;
         var i = 0;
 
-        while(i < sptlength && this._data.errors.length <= 0){
+        while(i < sptlength && this._errors.length <= 0){
             var str = split[i].toLowerCase().replace(/\s\s+/g, ' ').trim().split(' ');
             if(str.length <= 1){
-                this._data.errors.push({
+                this._errors.push({
                     message: `error`
                 });
             } else {
-                if(str[str.length - 1].indexOf(',') !== -1){
-                    str[str.length - 1] = str[str.length - 1].replace(/,/g , "");
+                var lastStrIndex = str.length - 1;
+                if(str[lastStrIndex].indexOf(',') !== -1){
+                    str[lastStrIndex] = str[lastStrIndex].replace(/,/g , "");
                 }
-                var firstMatch = str[0]; // columnName
-                if (firstMatch === 'create' && str[1] === 'table') {
+                this._columnName = str[0]; // columnName
+                if (this._columnName === 'create' && str[1] === 'table') {
                     this._data.name = str[2];
                 } else {
                     //the firstMatch  (str[0]) will be always the columnName
                     //the secondMatch (str[1]) will be always the data_type
-                    this._name = firstMatch;
                     this.getDataTypeAndSize(str);
                     this.validateSyntax(str);
                     this.customInput();
                     this.customLabelName();
-                    data.push({
+                    this._data.push({
                         html: {
                             category  : 'form',
                             tag       : this._inputType,
@@ -191,7 +185,7 @@ class CreateTableToJson {
                         },
                         table: {
                             isPrimaryKey: this._isPrimaryKey,
-                            columnName: this._name,
+                            columnName: this._columnName,
                             type: this._dataType,
                             nullable: this._nullable,
                             size: this._size
@@ -201,65 +195,9 @@ class CreateTableToJson {
             }
             i++;
         }
-        if(this._data.errors.length <= 0){
-            var grid        = '3 4 5';
-            var groups      = [];
-            var arrGrid     = (grid).split(' ');
-            var chunkSize   = arrGrid.length;
-            var page = {
-                rows: [],
-                name: 'Page 1'
-            };
-
-            for (var i = 0; i < data.length; i += chunkSize) {
-                groups.push(data.slice(i, i + chunkSize));
-            }
-
-            var newPage = groups.reduce(function(acc, group, index){
-                var row = {
-                    grid: grid,
-                    columns: []
-                };
-                page.rows.push(row);
-                group.map(function(data, i){
-                    return page.rows[index].columns.push({
-                        data: [data]
-                    });
-                }, 0);
-                return page;
-            }, 0);
-            /*
-            Another way to do the same thing from above
-            for(var i = 0; i < groups.length ; i++){
-                var g = groups[i];
-                var row = {
-                    grid: grid,
-                    columns: []
-                };
-                page.rows.push(row);
-                for(var j = 0; j < g.length; j++){
-                    var data = g[j];
-                    page.rows[i].columns.push({
-                        data: [data]
-                    });
-                    this._data.pages[0] = page;
-                }
-            }*/
-            this._data.pages[0] = newPage;
-
-            var lastRow = this._data.pages[0].rows.length;
-            var columns = this._data.pages[0].rows[lastRow - 1].columns;
-            if(columns.length < chunkSize){
-                for(var k = columns.length; k < chunkSize; k++){
-                    this._data.pages[0].rows[lastRow - 1].columns.push({
-                        data: []
-                    })
-                }
-            }
-        }
     }
     customLabelName(){
-        var splitColumnName  = this._name.split('_');
+        var splitColumnName  = this._columnName.split('_');
         var labelName = {
             'dat' : 'Data',
             'qtd' : 'Quantidade',
@@ -297,7 +235,7 @@ class CreateTableToJson {
         }, 0).join(' ').trim();
     }
     customInput(){
-        if(this._name.indexOf('ind_') !== -1)
+        if(this._columnName.indexOf('ind_') !== -1)
             this._inputType = 'select';
 
         if(this._inputType === 'text' || this._inputType === 'textarea'){
@@ -318,46 +256,30 @@ class CreateTableToJson {
               | VARCHAR2    | <textarea></textarea>
               */
             "mysql": {
-                integer:{
-                     INT: 'TEXT',
-                    SMALLINT: 'TEXT',
-                    TINYINT: 'TEXT',
-                    MEDIUMINT: 'TEXT',
-                    BIGINT: 'TEXT'
-                },
-                real: {
-                    FLOAT: 'TEXT',
-                    DOUBLE: 'TEXT',
-                    DECIMAL: 'TEXT'
-                },
-                text: {
-                    CHAR: 'TEXT',
-                    VARCHAR: 'TEXT',
-                    /*TINYTEXT : {
-                     mysql: 'TINYTEXT' ,
-                     laravel: 'decimal'
-                     },*/
-                    TEXT: 'TEXT',
-                    MEDIUMTEXT: 'TEXT',
-                    LONGTEXT: 'TEXT'
-                },
-                binary: {
-                    BINARY: 'TEXT'
-                },
-                temporal: {
-                    DATE: 'TEXT',
-                    TIME: 'TEXT',
-                    DATETIME: 'TEXT',
-                    TIMESTAMP: 'TEXT'
-                }
+                //integer
+                INT: 'TEXT',
+                SMALLINT: 'TEXT',
+                TINYINT: 'TEXT',
+                MEDIUMINT: 'TEXT',
+                BIGINT: 'TEXT',
+                //real
+                FLOAT: 'TEXT',
+                DOUBLE: 'TEXT',
+                DECIMAL: 'TEXT',
+                //text
+                CHAR: 'TEXT',
+                VARCHAR: 'TEXT',
+                TEXT: 'TEXT',
+                MEDIUMTEXT: 'TEXT',
+                LONGTEXT: 'TEXT',
+                //binary
+                BINARY: 'TEXT',
+                //temporal
+                DATE: 'TEXT',
+                TIME: 'TEXT',
+                DATETIME: 'TEXT',
+                TIMESTAMP: 'TEXT'
             },
-            /*"mysql": {
-                "INT" : "number",
-                "TINYINT" : "number",
-                "VARCHAR2" : 'textarea',
-                "VARCHAR" :  'textarea',
-                "DATETIME" :  'date'
-            },*/
             "oracle": {
                 CHAR : 'text',
                 NCHAR : 'text',
@@ -391,7 +313,15 @@ class CreateTableToJson {
             return false;
         return true;
     }
-
+    getError(){
+        return this._errors;
+    }
+    hasError(){
+        if(this._errors.length > 0){
+            return true;
+        }
+        return false;
+    }
     isInt(val) {
         var intRegex = /^-?\d+$/;
         if (!intRegex.test(val))
@@ -402,6 +332,55 @@ class CreateTableToJson {
     }
 }
 
+class BootstrapGridSystem{
+
+    constructor(data = [], grid = '4 4 4'){
+        this._data = data;
+        this._grid = grid;
+        this._page = [];
+    }
+
+    convert(){
+        var groups      = [];
+        var arrGrid     = (this._grid).split(' ');
+        var grid        = this._grid;
+        var chunkSize   = arrGrid.length;
+        var page = {
+            rows: [],
+            name: 'Page 1'
+        };
+
+        for (var i = 0; i < this._data.length; i += chunkSize) {
+            groups.push(this._data.slice(i, i + chunkSize));
+        }
+
+        this._page = groups.reduce(function(acc, group, index){
+            page.rows.push({
+                grid: grid,
+                columns: []
+            });
+            group.map(function(data, i){
+                return page.rows[index].columns.push({
+                    data: [data]
+                });
+            }, 0);
+            return page;
+        }, 0);
+        var lastRow = this._page.rows.length;
+        var columns = this._page.rows[lastRow - 1].columns;
+        if(columns.length < chunkSize){
+            for(var k = columns.length; k < chunkSize; k++){
+                this._page.rows[lastRow - 1].columns.push({
+                    data: []
+                })
+            }
+        }
+    }
+
+    getPage(){
+        return this._page;
+    }
+}
 (function(){
 	angular.module('app')
 	.directive('createTableToJson', createTableToJson);
@@ -426,28 +405,30 @@ class CreateTableToJson {
 		vm.createTable         = createTable;
 
 	    function createTable(string){
-	        var createTableToJson = new CreateTableToJson(string, 'oracle');
+            vm.errors = [];
+            var createTableToJson = new CreateTableToJson(string, 'oracle');
 	        createTableToJson.convert();
-	        var data = createTableToJson.getData();
-	        vm.errors = data.errors;
-	        if(data.errors.length <= 0){
-	            vm.data.pages.push({
-	                rows: data.pages[0].rows,
-	                name: data.pages[0].name
-	            });
-	        }
+            if(!createTableToJson.hasError()){
+                var data = createTableToJson.getData();
+                var bootstrapGrid = new BootstrapGridSystem(data, '4 4 4' );
+                bootstrapGrid.convert();
+                var page = bootstrapGrid.getPage();
+                vm.data.pages.push(page);
+            } else {
+                vm.errors = createTableToJson.getError();
+            }
 	    }		
 	}
 
     function createTableString(){
         return `
-    supplier_id number(10) NOT NULL,
-  supplier_name varchar2(50) NOT NULL,
-  address varchar2(50),
-  city varchar2(50),
-  state varchar2(25),
-  dat_now date,
-  zip_code varchar2(10)
+supplier_id number(10) NOT NULL,
+supplier_name varchar2(50) NOT NULL,
+address varchar2(50),
+city varchar2(50),
+state varchar2(25),
+dat_now date,
+zip_code varchar2(10)
 `;
     }
 })();
