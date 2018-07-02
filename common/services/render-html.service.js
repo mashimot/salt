@@ -7,7 +7,7 @@ angular.module('app')
 	function RenderHtml(){
 
         var name        = '';
-        var toUpperName = '';
+        var name = '';
         var nullable    = false;
         var labelName   = '';
         var inputType   = '';
@@ -26,8 +26,7 @@ angular.module('app')
 
         function setParams(d){
             name        = typeof d.table.columnName === 'undefined'? '' : d.table.columnName;
-            nullable    = typeof d.table.nullable === 'undefined'? '' : d.table.nullable ;
-            toUpperName = name.toUpperCase();
+            nullable    = typeof d.table.nullable === 'undefined'? '' : d.table.nullable;
             labelName   = typeof d.html.label === 'undefined'? '' : d.html.label;
             htmlData    = typeof d.html.data === 'undefined'? '' : d.html.data;
             imgSrc      = typeof d.html.src === 'undefined'? '' : d.html.src;
@@ -53,10 +52,7 @@ angular.module('app')
             switch(type){
                 case 0:
                     return _default();
-                case 1:
-                    return laravel();
-                break; 
-                default: 
+                default:
                     return false;
                 break;
             }
@@ -72,139 +68,81 @@ angular.module('app')
                 "h4": `<h4>${text}</h4>`,
                 "h5": `<h5>${text}</h5>`,
                 "h6": `<h6>${text}</h6>`,
-                "table": `<table class="table">
-                    ${fields.map((field, key) => (`<tr>${Object.keys(fields[0]).map((f, k) => `<td>${field[f]}</td>`).join('')}</tr>`)).join('')}
-                </table>`,
+                "table":
+                   `<table class="table">
+                        ${fields.map((field, key) => (`<tr>${Object.keys(fields[0]).map((f, k) => `<td>${field[f]}</td>`).join('')}</tr>`)).join('')}
+                    </table>`,
                 "image": `<img src="${imgSrc}" class="img-fluid">`,
-                "textarea": 
+                "textarea":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="txt_${name}">${labelName}</label>
                         <textarea class="form-control" name="${name}" id="txt_${name}"  ${ nullable? `` : `required` }></textarea>
-                    </div>                   
-                    <!-- FIM ${toUpperName} -->
+                    </div>
+                    <!-- end ${name} -->
                     ` 
                 ,
-                "select":  
+                "select":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <select class="form-control" name="${name}" id="i_${name}"  ${ nullable? `` : `required` }>
                             <option value="">Selecione</option>
                             ${elements.map( element => `<option value="${element.value}">${element.text}</option>` ).join('')}
                         </select>
-                    </div>                    
-                    <!-- FIM ${toUpperName} -->
+                    </div>
+                    <!-- ${name} -->
                     `
                 ,
-                "checkbox": 
+                "checkbox":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         ${elements.map( element => `<div class="checkbox"><label><input type="checkbox" name="${name}" value="${element.value}"> ${element.text}</label></div>`).join('')}
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- end ${name} -->
                     `
                 ,
-                "radio": 
+                "radio":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         ${elements.map( element => `<div class="radio"><label><input type="radio" name="${name}" value="${element.value}"> ${element.text}</label></div>`).join('')}
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- end ${name} -->
                     `
                 ,                
-                "text": 
+                "text":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control" name="${name}" id="i_${name}" value=""  ${ nullable? `` : `required` }>
                     </div>                
-                    <!-- FIM ${toUpperName} -->
+                    <!-- end ${name} -->
                     `
                 ,
                 "number": 
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control number" name="${name}" id="i_${name}" value="" readonly ${ nullable? `` : `required` }>
                     </div>                    
-                    <!-- FIM ${toUpperName} -->
+                    <!-- end ${name} -->
                     `
                 ,
-                "date": 
-                    `
-                    <!-- INICIO ${toUpperName} -->
+                "date":
+                   `<!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control date" name="${name}" id="i_${name}" value="" ${ nullable? `` : `required` }>
                     </div>
-                    <!-- FIM ${toUpperName} -->
-                    `
-            }
-        }
-
-        function laravel(){
-
-            return {
-                "textarea":
-                    `
-                    <!-- INICIO ${toUpperName} -->
-                    <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
-                        <label for="txt_${name}">${labelName}</label>
-                        <textarea class="form-control" name="${name}" id="txt_${name}" >{{ (old('${name}') != null) ? old('${name}') : '$formulario->${name}' }}</textarea>
-                    </div>                   
-                    <!-- FIM ${toUpperName} -->
-                    `
-                ,
-                "select":
-                    `
-                    <!-- INICIO ${toUpperName} -->
-                    <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
-                        <label for="i_${name}">${labelName}</label>
-                        <select class="form-control" name="${name}" id="i_${name}"  required>
-                            <option value="">Selecione</option>
-                            ${complemento}
-                        </select>
-                    </div>                    
-                    <!-- FIM ${toUpperName} -->
-                    `
-                ,
-                "text":
-                    `
-                    <!-- INICIO ${toUpperName} -->
-                    <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
-                        <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control" name="${name}" id="i_${name}" value="{{ (old('${name}') != null) ? old('${name}') : '$tipodoc->${name}' }}" readonly required>
-                    </div>                
-                    <!-- FIM ${toUpperName} -->
-                    `
-                ,
-                "number":
-                    `
-                    <!-- INICIO ${toUpperName} -->
-                    <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
-                        <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control number" name="${name}" id="i_${name}" value="{{ (old('${name}') != null) ? old('${name}') : '$tipodoc->${name}' }}" readonly required>
-                    </div>                    
-                    <!-- FIM ${toUpperName} -->
-                    `
-                ,
-                "date":
-                    `
-                    <!-- INICIO ${toUpperName} -->
-                    <div class="form-group ${colValue} {{ $errors->has('${name}') ? 'has-error' : '' }}" id="div_${name}">
-                        <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control date" name="${name}" id="i_${name}" value="{{ (old('${name}') != null) ? old('${name}') : '$tipodoc->${name}' }}" readonly required>
-                    </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- end ${name} -->
                     `
             }
         }
@@ -212,62 +150,62 @@ angular.module('app')
             return {
                 "textarea":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- INICIO ${name} -->
                         <div class="form-group ${colValue}" id="div_${name}">
                             <label for="i_${name}">${labelName}</label>
                             <textarea class="form-control" name='${name}' v-model="model.${name}" id="i_${name}"></textarea>
                             <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                         </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- FIM ${name} -->
                     `
                 ,
                 "select":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- INICIO ${name} -->
                     <div class="form-group ${colValue}" id="div_${name}">
                         <label for="s_${name}">${labelName}</label>
                         <select class="form-control" v-model="model.${name}" id="s_${name}">
                             <option value="">Selecione</option>
-                            @foreach(dominios('${toUpperName}') as $dominio)
+                            @foreach(dominios('${name}') as $dominio)
                                 <option value="{{ $dominio->val_dominio_item }}">{{ $dominio->dsc_dominio_item }}</option>
                             @endforeach
                         </select>
                         <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- FIM ${name} -->
                     `
                 ,
                 "text":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- INICIO ${name} -->
                     <div class="form-group ${colValue}" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control" name='${name}' id="i_${name}" value="{{ old('${name}') }}" v-model="model.${name}">
                         <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- FIM ${name} -->
                     `
                 ,
                 "number":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- INICIO ${name} -->
                     <div class="form-group ${colValue}" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="number" class="form-control" name='${name}' id="i_${name}" value="{{ old('${name}') }}" v-model="model.${name}">
                         <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- FIM ${name} -->
                     `
                 ,
                 "date":
                     `
-                    <!-- INICIO ${toUpperName} -->
+                    <!-- INICIO ${name} -->
                     <div class="form-group ${colValue}" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control datepicker" name='${name}' id="i_${name}" value="{{ old('${name}') }}" v-model="model.${name}">
                         <span class="help text-danger" v-if="form.errors.has('${name}')" v-text="form.errors.get('${name}')"></span>
                     </div>
-                    <!-- FIM ${toUpperName} -->
+                    <!-- FIM ${name} -->
                     `
             }
         }
