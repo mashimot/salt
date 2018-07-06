@@ -15,6 +15,11 @@
 				var vmPage = this;
 				vmPage.data = $scope.data;
 
+				vmPage.sortablePage = {
+		            //placeholder: 'card border border-primary ui-placeholder-highlight',
+		            placeholder: 'p-1 mb-1 bg-primary text-white'
+	        	};
+
 				vmPage.deletePage = function(index){
 					vmPage.data.pages.splice(index, 1);
 				}

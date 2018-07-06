@@ -61,7 +61,6 @@ class CreateTableToJson {
         }
 
         var database  = this._dataBase[dataType.toUpperCase()];
-        console.log(database);
         if (typeof database !== 'undefined' && dataType !== '') {
             inputType = database;
         } else {
@@ -153,28 +152,27 @@ class CreateTableToJson {
     }
     convert(){
         var split       = this._string.trim().split("\n");
-        var sptlength   = split.length;
         var i = 0;
 
-        while(i < sptlength && this._errors.length <= 0){
-            var str = split[i].toLowerCase().replace(/\s\s+/g, ' ').trim().split(' ');
-            if(str.length <= 1){
+        while(i < split.length && this._errors.length <= 0){
+            var stringArr = split[i].toLowerCase().replace(/\s\s+/g, ' ').trim().split(' ');
+
+            if(stringArr.length <= 1){
                 this._errors.push({
                     message: `error`
                 });
             } else {
-                var lastStrIndex = str.length - 1;
-                if(str[lastStrIndex].indexOf(',') !== -1){
-                    str[lastStrIndex] = str[lastStrIndex].replace(/,/g , "");
-                }
-                this._columnName = str[0]; // columnName
-                if (this._columnName === 'create' && str[1] === 'table') {
-                    this._data.name = str[2];
+                var lastStrIndex = stringArr.length - 1;
+                stringArr[lastStrIndex] = stringArr[lastStrIndex].replace(/,/g , "");
+                this._columnName = stringArr[0]; // columnName
+
+                if (this._columnName === 'create' && stringArr[1] === 'table') {
+                    this._data.name = stringArr[2];
                 } else {
-                    //the firstMatch  (str[0]) will be always the columnName
-                    //the secondMatch (str[1]) will be always the data_type
-                    this.getDataTypeAndSize(str);
-                    this.validateSyntax(str);
+                    //the firstMatch  (stringArr[0]) will be always the columnName
+                    //the secondMatch (stringArr[1]) will be always the data_type
+                    this.getDataTypeAndSize(stringArr);
+                    this.validateSyntax(stringArr);
                     this.customInput();
                     this.customLabelName();
                     this._data.push({
@@ -385,7 +383,7 @@ class BootstrapGridSystem{
 	angular.module('app')
 	.directive('createTableToJson', createTableToJson);
 	
-	createTableToJson.$inject = [];
+	createTableToJson.$inject = ['Logger'];
 
 	function createTableToJson(){
 		return {
@@ -398,24 +396,34 @@ class BootstrapGridSystem{
 		};		
 	}
 
-	function controller($scope){
+	function controller($scope, Logger){
 		var vm = this;
 	    vm.data = $scope.data;
+        vm.grid = '4 4 4';
 		vm.createTableString   = createTableString();
 		vm.createTable         = createTable;
+        vm.database            = ['oracle'/*, 'mysql'*/];
+        vm.options             = {
+            database: 'oracle'
+        };
 
-	    function createTable(string){
+	    function createTable(string, isFormValid){
             vm.errors = [];
-            var createTableToJson = new CreateTableToJson(string, 'oracle');
-	        createTableToJson.convert();
-            if(!createTableToJson.hasError()){
-                var data = createTableToJson.getData();
-                var bootstrapGrid = new BootstrapGridSystem(data, '4 4 4' );
-                bootstrapGrid.convert();
-                var page = bootstrapGrid.getPage();
-                vm.data.pages.push(page);
+            if(isFormValid){
+                var createTableToJson = new CreateTableToJson(string, vm.options.database);
+                createTableToJson.convert();
+                if(!createTableToJson.hasError()){
+                    var data = createTableToJson.getData();
+                    var bootstrapGrid = new BootstrapGridSystem(data, vm.grid);
+                    bootstrapGrid.convert();
+                    var page = bootstrapGrid.getPage();
+                    vm.data.pages.push(page);
+                    Logger.success('New Data successfully created!');
+                } else {
+                    vm.errors = createTableToJson.getError();
+                }                
             } else {
-                vm.errors = createTableToJson.getError();
+                Logger.error('Oops! please fill in all required fields!');
             }
 	    }		
 	}

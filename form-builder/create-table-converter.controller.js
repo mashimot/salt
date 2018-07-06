@@ -9,11 +9,7 @@
 
     function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView, Logger){
         var vm = this;
-
-        vm.editPageName = {};
-        vm.options = {
-            database: 'oracle'
-        };
+        vm.editPageName        = {};
         vm.preview             = '';
         vm.rows                = [];
         vm.data                = {
@@ -21,12 +17,8 @@
             type: 'tab'
         };
         vm.data = formDataService.getFormData();
-        vm.tableInputs         = [];
-        vm.showOptions         = -1;
         vm.loading             = false;
         vm.reverse             = true;
-        vm.propertyNames       = ['name', 'input_type','labelName'];
-        vm.database            = ['oracle', 'mysql'];
         vm.pageModel           = pageModel();
         vm.tags                = getTags();
         vm.tools               = HtmlElementsService.getHtmlElements();

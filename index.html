@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://ianlunn.github.io/Hover/css/hover.css">
-    <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/sandstone/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/sandstone/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.css">
     <style type="text/css">
         .highlight {
@@ -77,86 +77,84 @@
                         Page <span ng-bind="pageIndex + 1"></span>
                         <hr/>
                     </div>
-                    <div class="">
-                        <div ng-model="page.rows" ng-repeat="(rowIndex, row) in page.rows" ng-if="page.rows.length > 0">
-                            <section ng-repeat="(columnIndex, column) in row.columns track by $index" ng-if="row.columns.length > 0">
-                                <div ng-repeat="(dataIndex, d) in column.data" ng-if="d.html.category === 'form' && column.data.length > 0" class="row">
-                                    <div class="col-md-1">
-                                        <label class="btn btn-link btn-sm btn-block">
-                                            <input type="checkbox" ng-model="d.isPrimaryKey" class="checkbox" style="display: none;" />
-                                            <i class="fa fa-key" ng-show="d.isPrimaryKey"></i>
-                                            <i class="fa fa-ban text-danger" ng-show="!d.isPrimaryKey"></i>
-                                        </label>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="input-group">
-                                            <div class="input-group-append" ng-if="d.table.columnName.toLowerCase().indexOf('ind_') != -1 && d.table.columnName">
-                                                <button ng-click="vm.buscaDominio(d.table.columnName)" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-search fa-1x" aria-hidden="true"></i>
-                                                </button>
-                                                <div class="dropdown-menu" style="width: 100%;">
-                                                    <a class="dropdown-item" href="#" ng-show="vm.loading">
-                                                        <i class="fa fa-cog fa-1x fa-spin"></i> Loading...
-                                                    </a>
-                                                    <a class="dropdown-item" href="#" ng-show="!vm.loading && vm.dominio.error.has">
-                                                        <span class="text-danger" ng-bind="vm.dominio.error.msg"></span>
-                                                    </a>
-                                                    <a class="dropdown-item" href="#" ng-repeat="(dI, dom) in vm.dominio.data" ng-if="vm.dominio.data.length > 0">
-                                                        <span ng-bind="dom.val_dominio_item"></span> - <span ng-bind="dom.dsc_dominio_item"></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <input type="text" name="name{{ dataIndex }}" ng-model="d.table.columnName" class="form-control form-control-sm" required>
-                                        </div>
-                                        <div ng-messages="json['name' + dataIndex].$error" role="alert">
-                                            <div ng-message="required" class="text-danger">This is required!</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="input-group input-group-sm">
-                                            <input type="text" type="search" name="labelName{{ dataIndex }}" ng-model="d.html.label" class="form-control form-control-sm" required>
-                                            <div class="input-group-append">
-                                                <button ng-click="vm.corretorOrtografico(d.html.label, dataIndex, $event)" class="btn btn-outline-info btn-sm" type="button">
-                                                    <i class="fa fa-book" aria-hidden="true"></i>
-                                                </button>
+                    <div ng-model="page.rows" ng-repeat="(rowIndex, row) in page.rows" ng-if="page.rows.length > 0">
+                        <section ng-repeat="(columnIndex, column) in row.columns track by $index" ng-if="row.columns.length > 0">
+                            <div ng-repeat="(dataIndex, d) in column.data" ng-if="d.html.category === 'form' && column.data.length > 0" class="row">
+                                <div class="col-md-1">
+                                    <label class="btn btn-link btn-sm btn-block">
+                                        <input type="checkbox" ng-model="d.isPrimaryKey" class="checkbox" style="display: none;" />
+                                        <i class="fa fa-key" ng-show="d.isPrimaryKey"></i>
+                                        <i class="fa fa-ban text-danger" ng-show="!d.isPrimaryKey"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <div class="input-group-append" ng-if="d.table.columnName.toLowerCase().indexOf('ind_') != -1 && d.table.columnName">
+                                            <button ng-click="vm.buscaDominio(d.table.columnName)" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-search fa-1x" aria-hidden="true"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="width: 100%;">
+                                                <a class="dropdown-item" href="#" ng-show="vm.loading">
+                                                    <i class="fa fa-cog fa-1x fa-spin"></i> Loading...
+                                                </a>
+                                                <a class="dropdown-item" href="#" ng-show="!vm.loading && vm.dominio.error.has">
+                                                    <span class="text-danger" ng-bind="vm.dominio.error.msg"></span>
+                                                </a>
+                                                <a class="dropdown-item" href="#" ng-repeat="(dI, dom) in vm.dominio.data" ng-if="vm.dominio.data.length > 0">
+                                                    <span ng-bind="dom.val_dominio_item"></span> - <span ng-bind="dom.dsc_dominio_item"></span>
+                                                </a>
                                             </div>
                                         </div>
-                                        <div ng-messages="json['labelName' + dataIndex].$error" role="alert">
-                                            <div ng-message="required" class="text-danger">This is required!</div>
-                                        </div>
+                                        <input type="text" name="name{{ dataIndex }}" ng-model="d.table.columnName" class="form-control form-control-sm" required>
                                     </div>
-                                    <div class="col-md-2">
-                                        <select name="input_type{{ dataIndex }}" ng-model="d.html.tag" class="form-control form-control-sm" required>
-                                            <option value="">Selecione</option>
-                                            <option value="{{ tag }}" ng-repeat="tag in vm.tags | orderBy: tag" ng-bind="tag"></option>
-                                        </select>
-                                        <div ng-messages="json['input_type' + dataIndex].$error" role="alert" required>
-                                            <div ng-message="required" class="text-danger">This is required!</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <select name="table_type{{ dataIndex }}" ng-model="d.table.type" class="form-control form-control-sm" required>
-                                            <option value="">Selecione</option>
-                                            <option value="{{ columnName.toLowerCase() }}" ng-repeat="(columnName , db) in vm.dbs" ng-bind="columnName.toUpperCase()"></option>
-                                        </select>                                    
-                                    </div>
-                                    <div class="col-md-1">
-                                        <input type="text" ng-model="d.table.size" class="form-control form-control-sm">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="row">
-                                            <label ng-class="{'badge-danger': d.table.nullable, 'badge-default' : !d.table.nullable}" class="badge col-md-12" style="cursor: pointer;">
-                                                nullable? {{ d.table.nullable? 'No' : 'Yes' }}
-                                                <input type="checkbox" ng-model="d.table.nullable" class="checkbox" style="display: none;">
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button type="button" ng-click="column.data.splice(dataIndex, 1)" class="btn btn-outline-danger btn-sm btn-block"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <div ng-messages="json['name' + dataIndex].$error" role="alert">
+                                        <div ng-message="required" class="text-danger">This is required!</div>
                                     </div>
                                 </div>
-                            </section>
-                        </div>
+                                <div class="col-md-2">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" type="search" name="labelName{{ dataIndex }}" ng-model="d.html.label" class="form-control form-control-sm" required>
+                                        <div class="input-group-append">
+                                            <button ng-click="vm.corretorOrtografico(d.html.label, dataIndex, $event)" class="btn btn-outline-info btn-sm" type="button">
+                                                <i class="fa fa-book" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div ng-messages="json['labelName' + dataIndex].$error" role="alert">
+                                        <div ng-message="required" class="text-danger">This is required!</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="input_type{{ dataIndex }}" ng-model="d.html.tag" class="form-control form-control-sm" required>
+                                        <option value="">Selecione</option>
+                                        <option value="{{ tag }}" ng-repeat="tag in vm.tags | orderBy: tag" ng-bind="tag"></option>
+                                    </select>
+                                    <div ng-messages="json['input_type' + dataIndex].$error" role="alert" required>
+                                        <div ng-message="required" class="text-danger">This is required!</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="table_type{{ dataIndex }}" ng-model="d.table.type" class="form-control form-control-sm" required>
+                                        <option value="">Selecione</option>
+                                        <option value="{{ columnName.toLowerCase() }}" ng-repeat="(columnName , db) in vm.dbs" ng-bind="columnName.toUpperCase()"></option>
+                                    </select>                                    
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" ng-model="d.table.size" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="row">
+                                        <label ng-class="{'badge-danger': d.table.nullable, 'badge-default' : !d.table.nullable}" class="badge col-md-12" style="cursor: pointer;">
+                                            nullable? {{ d.table.nullable? 'No' : 'Yes' }}
+                                            <input type="checkbox" ng-model="d.table.nullable" class="checkbox" style="display: none;">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" ng-click="column.data.splice(dataIndex, 1)" class="btn btn-outline-danger btn-sm btn-block"><i class="far fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </form>
@@ -305,7 +303,7 @@
     <div class="modal-corretor-ortografia">
         <div class="modal-header">
             <div class="text-left">
-                <h1 >Correção Ortográfica</h1>
+                <h4 >Correção Ortográfica</h4>
             </div>
             <div class="text-center">
                 <button type="button" ng-click="corretorOrtografico()" class="btn btn-outline-info">
@@ -313,8 +311,8 @@
                 </button>
             </div>
             <div class="text-right">
-                <button type="button" class="btn btn-outline-danger">
-                    <i class="fa fa-close"></i>
+                <button type="button" class="close" aria-label="Close" ng-click="cancel()">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         </div>
@@ -322,31 +320,26 @@
             <div ng-if="isLoading" class="text-center" style="margin-top: 40px;">
                 <i class="fa fa-cog fa-spin fa-2x"></i> Loading...
             </div>
-            <div class="panel" ng-if="!isLoading">
-                <div class="panel-heading">
-                    <!--p><pre>{{ result }}</pre></p-->
-                </div>
-                <div class="panel-body">
-                    <div class="alert" ng-class="{ 'alert-danger': res.langTool.matches.length > 0, 'alert-success': res.langTool.matches.length <= 0 }" ng-repeat="(key, res) in result" ng-model="result">
-                        <div class="form-group">
-                            <label for="text-{{ key }}"><span ng-bind="res.text"></span></label>
-                            <div class="input-group">
-                                <input type="text" ng-model="res.text" ng-change="split(res.text)" id="text-{{ key }}" class="form-control form-control-sm">
-                                <div class="input-group-append">
-                                    <button ng-click="atualizar(res)" class="btn btn-info btn-sm" type="button">
-                                        Atualizar <i class="fa fa-book fa-1x" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+            <div ng-if="!isLoading">
+                <div class="px-2 py-2 text-white" ng-class="{ 'bg-danger': res.langTool.matches.length > 0, 'bg-success': res.langTool.matches.length <= 0 }" ng-repeat="(key, res) in result" ng-model="result">
+                    <div class="form-group">
+                        <label for="text-{{ key }}"><span ng-bind="res.text"></span></label>
+                        <div class="input-group">
+                            <input type="text" ng-model="res.text" ng-change="split(res.text)" id="text-{{ key }}" class="form-control form-control-sm">
+                            <div class="input-group-append">
+                                <button ng-click="atualizar(res)" class="btn btn-info btn-sm" type="button">
+                                    Atualizar <i class="fa fa-book fa-1x" aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
-                                <label>{{ match.message }}</label>
-                                <select multiple class="form-control">
-                                    <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
-                                    </option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
+                            <label>{{ match.message }}</label>
+                            <select multiple class="form-control">
+                                <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>

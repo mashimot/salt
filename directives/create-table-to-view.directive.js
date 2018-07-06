@@ -64,7 +64,7 @@
                                 rowHtml += `\n\t<div class="row">${columnHtml}\n\t</div>`;
                             }
                         }
-                        pageHtml += `<div class="page-${k}">${rowHtml}\n</div>\n`;
+                        pageHtml += `<section class="page-${k + 1}">${rowHtml}\n</section>\n`;
                         fullHtml += pageHtml;
                     }
                 }

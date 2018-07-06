@@ -36,7 +36,8 @@
         }
         
         vmMenu.sortableNewPage = {
-            placeholder: 'card border border-primary ui-placeholder-highlight',
+            //placeholder: 'card border border-primary ui-placeholder-highlight',
+            placeholder: 'card p-1 mb-1 bg-primary text-white',
             connectWith: '.connected-pages',
             update: function(event, ui){
                 vmMenu.pageModel = angular.copy(vmMenu.pageModel);
@@ -45,7 +46,8 @@
         
         vmMenu.sortableContainers = {
             connectWith: '.connected-bootstrap-grid',
-            placeholder: 'card border border-danger ui-placeholder-highlight',
+            //placeholder: 'card border border-danger ui-placeholder-highlight',
+            placeholder: 'card p-1 mb-1 bg-primary text-white',
             update: function(event, ui){
                 var oldModel = ui.item.sortable.model;
                 var textWithoutExtraWhiteSpaces = oldModel.grid.replace(/ +/g, ' ').trim();
@@ -69,7 +71,8 @@
 
         vmMenu.toolSortable = {
             connectWith: '.connected-drop-target-tool',
-            placeholder: 'card border border-primary ui-placeholder-highlight' ,
+            //placeholder: 'card border border-primary ui-placeholder-highlight' ,
+            placeholder: 'card p-1 mb-1 bg-primary text-white',            
             handle: '.tool-handle',
             stop: function(event, ui){
                 vmMenu.tools = angular.copy(vmMenu.tools);

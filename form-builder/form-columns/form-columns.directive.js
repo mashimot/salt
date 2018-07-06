@@ -11,13 +11,15 @@
 			require: '^form-rows',
 			templateUrl: 'form-builder/form-columns/form-columns.html',
 			controller: function($scope){			
-				var vmColumn 	= this;
-				var vmPage 		= $scope.vmPage; 
-				vmColumn.data 	= $scope.data;
+				var vmColumn 			= this;
+				var vmPage 				= $scope.vmPage; 
+				vmColumn.showOptions  	= -1;
+				vmColumn.data 			= $scope.data;
 					
 		        vmColumn.sortableOptions = {
 		            connectWith: '.connected-drop-target-sortable',
-		            placeholder: 'card border border-primary ui-placeholder-highlight',
+		            //placeholder: 'card border border-primary ui-placeholder-highlight',
+					placeholder: 'p-1 mb-1 bg-primary text-white',		            
 		            //handle: '.handle',
 		            cancel: ".unsortable",
                     stop: function(event, ui){
@@ -27,6 +29,7 @@
 
 		        vmColumn.columnSortable = {
 		            placeholder: 'card border border-primary ui-placeholder-highlight',
+		            //placeholder: 'card p-1 mb-1 bg-primary text-white',
 		            start: function(event, ui){
 		                ui.placeholder.addClass(ui.item.attr("class"));
 		            },

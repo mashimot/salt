@@ -1,5 +1,5 @@
 <section class="sticky-top scrollable">
-    <div class="px-1 py-1 border border-warning">
+    <div class="px-1 py-1 border border-info">
         <div class="row">
             <section id="page" class="col-md-12">
                 <button class="btn btn-outline-success btn-block" ng-click="vmMenu.newFile()">New File</button>
@@ -31,7 +31,7 @@
             <section id="containers" class="col-md-12">
                 <ng-form name="bootstrap_container" ng-model="vmMenu.bootstrap" ui-sortable="vmMenu.sortableContainers">
                     <div ng-repeat="b in vmMenu.bootstrap">
-                        <div ng-if="!bootstrap_container.grid.$invalid">
+                        <div ng-if="!bootstrap_container.$invalid">
                             <strong class="badge badge-primary col-md-12" style="cursor: move;">
                                 <i class="fa fa-arrows-alt fa-1x"></i> GRID 
                                 [ <span ng-bind="b.grid"></span> ]
@@ -48,18 +48,20 @@
                                    class="form-control form-control-sm"
                                    style="cursor: pointer"
                                    aria-label="Text input with dropdown button"
+                                   ng-class="{ 'is-invalid': !bootstrap_container.$valid }"
                             >
+
                             <div class="input-group-append">
                                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Grid</button>
                                 <div class="dropdown-menu">
                                     <button type="button" class="dropdown-item" ng-repeat="container in vmMenu.grids" ng-bind="container.grid" ng-click="vmMenu.bootstrap[0] = container"></button>
                                 </div>
                             </div>
-                        </div>
-                        <div ng-messages="bootstrap_container.grid.$error" class="help-block">
-                            <div ng-message="required">* Enter with your grid, the sum must be 12. Ex: 4 4 4!</div>
-                            <div ng-message="pattern">* Allows only numbers and space</div>
-                            <div ng-message="isSumEqualsTo">* The sum must be equals to 12</div>
+                            <div ng-messages="bootstrap_container.$error" class="invalid-feedback">
+                                <div ng-message="required">* Enter with your grid, the sum must be 12. Ex: 4 4 4!</div>
+                                <div ng-message="pattern">* Allows only numbers and space</div>
+                                <div ng-message="isSumEqualsTo">* The sum must be equals to 12</div>
+                            </div>                            
                         </div>
                     </div>
                 </ng-form>
