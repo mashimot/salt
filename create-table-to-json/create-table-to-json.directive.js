@@ -1,5 +1,4 @@
 class CreateTableToJson {
-
     constructor(string = '', dbType = 'oracle'){
         this._string        = string;
         this._nullable      = false;
@@ -10,9 +9,10 @@ class CreateTableToJson {
         this._dataType      = '';
         this._size          = '';
         this._index         = 2;
-        this._dataBase      = this.getAllowedTypes()[dbType];
         this._data          = [];
-        this._errors = [];
+        this._errors        = [];
+        this._dataBase      = this.getAllowedTypes()[dbType];
+        this._customLabel   = this.getCustomLabelName();
     }
 
     getDataTypeAndSize(str){
@@ -67,7 +67,6 @@ class CreateTableToJson {
         this._size      = size;
     }
     validateSyntax(stringArr){
-        console.log(stringArr);
         var value   = '';
         var allowed = {
             'not': {
@@ -94,7 +93,6 @@ class CreateTableToJson {
 
         for (var i = this._index; i < stringArr.length; i++) {
             var currentStr = stringArr[i].replace(/,/g , "");
-            console.log(stringArr[i]);
             var hasError = false;
             var nextValue = '';
             var prevValue = '';
@@ -183,43 +181,20 @@ class CreateTableToJson {
             i++;
         }
     }
+
     customLabelName(){
         var splitColumnName  = this._columnName.split('_');
-        var labelName = {
-            'dat' : 'Data',
-            'qtd' : 'Quantidade',
-            'cod' : 'Código',
-            'dsc' : 'Descrição',
-            'ind' : '',
-            'usu' : 'Usuário',
-            'tpo' : 'Tipo',
-            'nom' : 'Nome',
-            'est' : 'Estado',
-            'acao': 'Ação',
-            'psv' : 'Processo Seletivo',
-            'per' : 'Porcentagem',
-            'abv' : 'Abreviatura',
-            'obs' : 'Observação',
-            'num' : 'Número',
-            'usuario': 'Usuário',
-            'docto' : 'Documento',
-            'doc' : 'Documento',
-            'val': 'Valor',
-            'sta': 'Status',
-            'config': 'Configuração',
-            'inicio': 'Ínicio',
-            'termino': 'Término',
-            'situacao': 'Situação',
-            'nivel': 'Nível'
-        };
+        if(splitColumnName.length > 0){
+            for(var i = 0; i < splitColumnName.length; i++){
+                var currentPartialName = splitColumnName[i];
+                var value = this._customLabel[currentPartialName];
+                if(typeof value !== 'undefined')
+                    currentPartialName = value;
 
-        this._labelName = splitColumnName.map(function(currentPartialName, index){
-            var value = labelName[currentPartialName];
-            if(typeof value !== 'undefined')
-                currentPartialName = value;
-
-            return currentPartialName.charAt(0).toUpperCase() + currentPartialName.substr(1);
-        }, 0).join(' ').trim();
+                splitColumnName[i] = currentPartialName.charAt(0).toUpperCase() + currentPartialName.substr(1);
+            }
+            this._labelName = splitColumnName.join(' ').trim();;
+        }
     }
     customInput(){
         if(this._columnName.indexOf('ind_') !== -1)
@@ -302,6 +277,35 @@ class CreateTableToJson {
     }
     getError(){
         return this._errors;
+    }
+    getCustomLabelName(){
+        return {
+            'dat' : 'Data',
+            'qtd' : 'Quantidade',
+            'cod' : 'Código',
+            'dsc' : 'Descrição',
+            'ind' : '',
+            'usu' : 'Usuário',
+            'tpo' : 'Tipo',
+            'nom' : 'Nome',
+            'est' : 'Estado',
+            'acao': 'Ação',
+            'psv' : 'Processo Seletivo',
+            'per' : 'Porcentagem',
+            'abv' : 'Abreviatura',
+            'obs' : 'Observação',
+            'num' : 'Número',
+            'usuario': 'Usuário',
+            'docto' : 'Documento',
+            'doc' : 'Documento',
+            'val': 'Valor',
+            'sta': 'Status',
+            'config': 'Configuração',
+            'inicio': 'Ínicio',
+            'termino': 'Término',
+            'situacao': 'Situação',
+            'nivel': 'Nível'
+        };
     }
     hasError(){
         if(this._errors.length > 0)
