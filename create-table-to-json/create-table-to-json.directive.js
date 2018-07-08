@@ -12,19 +12,13 @@ class CreateTableToJson {
         this._index         = 2;
         this._dataBase      = this.getAllowedTypes()[dbType];
         this._data          = [];
-        /*this._data          = {
-            name: '',
-            pages: [],
-            type: 'tab'
-        };*/
         this._errors = [];
     }
 
     getDataTypeAndSize(str){
         //var secondMatch = str[1].replace(/,/g, '');
-        var RegexValBtwParen = /\(([^)]*)\)[^(]*$/;
+        var RegexValBtwParen =  '\\((.*)\\)';
         var secondMatch = str[1];
-        //var RegexValBtwParen = /\((.*)\)/;
         var dataType, inputType, size = '';
         var hasValBtwParen = secondMatch.match(RegexValBtwParen);
 
@@ -47,13 +41,13 @@ class CreateTableToJson {
             if(n.indexOf('.') !== -1 || n.indexOf(',') !== -1){
                 if(!this.isFloat((n))){
                     this._errors.push({
-                        message: `\`${this._columnName}\` must be a number!`
+                        message: `\`${this._columnName}\`: ${n} is not a number!`
                     });
                 }
             } else {
                 if(!this.isInt((n))){
                     this._errors.push({
-                        message: `\`${this._columnName}\` must be a number!`
+                        message: `\`${this._columnName}\`: ${n} is not a number!`
                     });
                 }
             }
@@ -72,9 +66,8 @@ class CreateTableToJson {
         this._inputType = inputType;
         this._size      = size;
     }
-    validateSyntax(str){
-        var nullable = false;
-        var isPrimaryKey = false;
+    validateSyntax(stringArr){
+        console.log(stringArr);
         var value   = '';
         var allowed = {
             'not': {
@@ -99,8 +92,9 @@ class CreateTableToJson {
             }
         };
 
-        for (var i = this._index; i < str.length; i++) {
-            var currentStr = str[i].replace(/,/g , "");
+        for (var i = this._index; i < stringArr.length; i++) {
+            var currentStr = stringArr[i].replace(/,/g , "");
+            console.log(stringArr[i]);
             var hasError = false;
             var nextValue = '';
             var prevValue = '';
@@ -110,11 +104,11 @@ class CreateTableToJson {
                 });
             } else {
                 var index = i + 1;
-                if(i === str.length - 1){
-                    index = str.length - 1;
+                if(i === stringArr.length - 1){
+                    index = stringArr.length - 1;
                 }
-                var nextString = str[index];
-                var prevString = str[i - 1];
+                var nextString = stringArr[index];
+                var prevString = stringArr[i - 1];
 
                 if(allowed[currentStr].next.length > 0){
                     if(nextString.indexOf(allowed[currentStr].next[0]) !== -1){
@@ -139,21 +133,13 @@ class CreateTableToJson {
             }
         }
         value = value.replace(/\s\s+/g, ' ').trim();
-        if(value.indexOf("not null") !== -1){
-            nullable = true;
-        }
-        if(value.indexOf("primary key") !== -1){
-            isPrimaryKey = true;
-        }
-
-        this._nullable = nullable;
-        this._isPrimaryKey = isPrimaryKey;
+        this._nullable = (value.indexOf("not null") !== -1)? true : false;
+        this._isPrimaryKey = (value.indexOf("primary key") !== -1)? true : false;
         this._index = 2;
     }
     convert(){
-        var split       = this._string.trim().split("\n");
+        var split = this._string.trim().split("\n");
         var i = 0;
-
         while(i < split.length && this._errors.length <= 0){
             var stringArr = split[i].toLowerCase().replace(/\s\s+/g, ' ').trim().split(' ');
 
@@ -164,6 +150,9 @@ class CreateTableToJson {
             } else {
                 var lastStrIndex = stringArr.length - 1;
                 stringArr[lastStrIndex] = stringArr[lastStrIndex].replace(/,/g , "");
+                if(stringArr[lastStrIndex] === '' && stringArr[lastStrIndex].length <= 0)
+                    stringArr.splice(lastStrIndex, 1);
+
                 this._columnName = stringArr[0]; // columnName
 
                 if (this._columnName === 'create' && stringArr[1] === 'table') {
@@ -307,7 +296,7 @@ class CreateTableToJson {
             return false;
 
         val = parseFloat(val);
-        if (isNaN(val))
+        if(isNaN(val))
             return false;
         return true;
     }
@@ -315,9 +304,8 @@ class CreateTableToJson {
         return this._errors;
     }
     hasError(){
-        if(this._errors.length > 0){
+        if(this._errors.length > 0)
             return true;
-        }
         return false;
     }
     isInt(val) {
@@ -351,13 +339,14 @@ class BootstrapGridSystem{
         for (var i = 0; i < this._data.length; i += chunkSize) {
             groups.push(this._data.slice(i, i + chunkSize));
         }
-
+        var count = -1;
         this._page = groups.reduce(function(acc, group, index){
             page.rows.push({
                 grid: grid,
                 columns: []
             });
             group.map(function(data, i){
+                count++;
                 return page.rows[index].columns.push({
                     data: [data]
                 });
@@ -389,7 +378,8 @@ class BootstrapGridSystem{
 		return {
 			templateUrl: 'create-table-to-json/create-table-to-json.html',
 			scope: {
-				data: '='
+                pages: '=',
+                joeys: '='
 			},
 			controller: controller,
 			controllerAs: 'vm'
@@ -398,7 +388,8 @@ class BootstrapGridSystem{
 
 	function controller($scope, Logger){
 		var vm = this;
-	    vm.data = $scope.data;
+	    vm.pages = $scope.pages;
+        vm.joeys = $scope.joeys;
         vm.grid = '4 4 4';
 		vm.createTableString   = createTableString();
 		vm.createTable         = createTable;
@@ -417,7 +408,8 @@ class BootstrapGridSystem{
                     var bootstrapGrid = new BootstrapGridSystem(data, vm.grid);
                     bootstrapGrid.convert();
                     var page = bootstrapGrid.getPage();
-                    vm.data.pages.push(page);
+                    vm.pages.push(page);
+                    $scope.joeys = data;
                     Logger.success('New Data successfully created!');
                 } else {
                     vm.errors = createTableToJson.getError();
@@ -430,7 +422,7 @@ class BootstrapGridSystem{
 
     function createTableString(){
         return `
-supplier_id number(10) NOT NULL,
+supplier_id number(10) NOT NULL  ,
 supplier_name varchar2(50) NOT NULL,
 address varchar2(50),
 city varchar2(50),

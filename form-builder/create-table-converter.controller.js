@@ -9,6 +9,7 @@
 
     function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView, Logger){
         var vm = this;
+        vm.joeys = [];
         vm.editPageName        = {};
         vm.preview             = '';
         vm.rows                = [];
@@ -16,7 +17,8 @@
             pages: [],
             type: 'tab'
         };
-        vm.data = formDataService.getFormData();
+        vm.pages = [];
+        //vm.pages = formDataService.getFormData();
         vm.loading             = false;
         vm.reverse             = true;
         vm.pageModel           = pageModel();
@@ -47,7 +49,7 @@
         function pageModel(){
             return [{
                 rows: [], 
-                name: 'Page Name ' + (vm.data.pages.length + 1) 
+                name: 'Page Name ' + (vm.pages.length + 1)
             }];            
         }
         function getTags(htmlElements){

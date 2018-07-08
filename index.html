@@ -59,20 +59,20 @@
 </div>
 <main role="main" ng-controller="CreateTableConverterController as vm">
     <div class="container-fluid">
-        <create-table-to-json data="vm.data"></create-table-to-json>
+        <create-table-to-json pages="vm.pages" joeys="vm.joeys"></create-table-to-json>
         <form-builder>
             <div class="row">
                 <div class="col-md-3">
-                    <form-menu data="vm.data" tools="vm.tools" page-model="vm.pageModel"></form-menu>
+                    <form-menu pages="vm.pages" tools="vm.tools" page-model="vm.pageModel"></form-menu>
                 </div>
                 <div class="col-md-9">
-                    <form-pages data="vm.data" pages="vm.data.pages"></form-pages>
+                    <form-pages pages="vm.pages" teste="vm.joeys"></form-pages>
                 </div>
             </div>
         </form-builder>
         <section class="pt-3">
             <form name="json" class="border border-primary">
-                <div ng-model="vm.data.pages" ng-repeat="(pageIndex, page) in vm.data.pages" class="px-2 py-2">
+                <div ng-model="vm.pages" ng-repeat="(pageIndex, page) in vm.pages" class="px-2 py-2">
                     <div class="">
                         Page <span ng-bind="pageIndex + 1"></span>
                         <hr/>
@@ -221,13 +221,13 @@
                 <div class="col-md-8">
                     <uib-tabset active="active" type="pills" justified="true">
                         <uib-tab index="0" heading="Model - {{ vm.model.name }}">
-                            <sql-to-model vm-pages="vm.data.pages" model="vm.model"></sql-to-model>
+                            <sql-to-model vm-pages="vm.pages" model="vm.model"></sql-to-model>
                         </uib-tab>
                         <uib-tab index="1" heading="View" >
-                            <sql-to-view vm-data="vm.data" view="vm.view" vm-pages="vm.data.pages" preview="vm.preview" ></sql-to-view>
+                            <sql-to-view view="vm.view" vm-pages="vm.pages" preview="vm.preview" ></sql-to-view>
                         </uib-tab>
                         <uib-tab index="2" heading="Controller - {{ vm.controller.name }}">
-                            <sql-to-controller vm-pages="vm.data.pages" controller="vm.controller"></sql-to-controller>
+                            <sql-to-controller vm-pages="vm.pages" controller="vm.controller"></sql-to-controller>
                         </uib-tab>
                     </uib-tabset>
                 </div>

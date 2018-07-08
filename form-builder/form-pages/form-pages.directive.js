@@ -9,11 +9,13 @@
 			restrict: "E",			
 			templateUrl: 'form-builder/form-pages/form-pages.html',
 			scope: {
-				data: '='
+				pages: '=',
+                teste: '='
 			},
 			controller: function($scope){
 				var vmPage = this;
-				vmPage.data = $scope.data;
+				vmPage.pages = $scope.pages;
+                vmPage.teste = $scope.teste;
 
 				vmPage.sortablePage = {
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',
@@ -21,7 +23,7 @@
 	        	};
 
 				vmPage.deletePage = function(index){
-					vmPage.data.pages.splice(index, 1);
+                    vmPage.data.pages.splice(index, 1);
 				}
 			},
 			controllerAs: 'vmPage'

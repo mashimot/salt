@@ -1,7 +1,7 @@
 (function(){
 	angular.module('app')
 	.directive('formColumns', formColumns);
-	
+
 	formColumns.$inject = ['Logger'];
 
 	function formColumns(Logger){
@@ -10,16 +10,20 @@
 			restrict: "E",
 			require: '^form-rows',
 			templateUrl: 'form-builder/form-columns/form-columns.html',
-			controller: function($scope){			
+			controller: function($scope){
 				var vmColumn 			= this;
-				var vmPage 				= $scope.vmPage; 
+				var vmPage 				= $scope.vmPage;
 				vmColumn.showOptions  	= -1;
 				vmColumn.data 			= $scope.data;
-					
+
+                vmColumn.deleteData = function(column, dataIndex){
+                    column.data.splice(dataIndex, 1);
+                };
+
 		        vmColumn.sortableOptions = {
 		            connectWith: '.connected-drop-target-sortable',
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-					placeholder: 'p-1 mb-1 bg-primary text-white',		            
+					placeholder: 'p-1 mb-1 bg-primary text-white',
 		            //handle: '.handle',
 		            cancel: ".unsortable",
                     stop: function(event, ui){
@@ -37,9 +41,9 @@
 		                var s           = ui.item.sortable;
 		                var n_pos       = s.dropindex;
 		                var o_pos       = s.index;
-		                var grid        = event.target.attributes['data-bootstrap-grid'].nodeValue.trim();   
-		                var rowIndex    = event.target.attributes['data-row-index'].nodeValue;   
-		                var pageNumber  = event.target.attributes['data-page-number'].nodeValue;                   
+		                var grid        = event.target.attributes['data-bootstrap-grid'].nodeValue.trim();
+		                var rowIndex    = event.target.attributes['data-row-index'].nodeValue;
+		                var pageNumber  = event.target.attributes['data-page-number'].nodeValue;
 		                var arrGrid     = grid.split(' ');
 		                var aux1        = arrGrid[n_pos];
 		                var aux2        = arrGrid[o_pos];
@@ -49,16 +53,16 @@
 		                var newGrid = arrGrid.join(' ');
 		                console.log(newGrid);
 		                if(grid !== newGrid){
-		                	vmPage.data.pages[pageNumber].rows[rowIndex].grid = newGrid;
+		                	vmPage.pages[pageNumber].rows[rowIndex].grid = newGrid;
 		                }
 		            },
 		            stop: function(event, ui){
 		                ui.placeholder.removeClass();
                         Logger.success('Column successfully updated!');
                     }
-		        };			        
+		        };
 			},
 			controllerAs: 'vmColumn'
-		}	
+		}
 	}
 })();

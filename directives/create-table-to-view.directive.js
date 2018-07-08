@@ -18,9 +18,7 @@
             templateUrl: 'template/view/view.html',
             restrict: 'E',
             scope: {
-                data       : '=vmData',
                 pages      : '=vmPages',
-                content    : '=preview',
                 view       : '='
             },
             controller: controller,
@@ -70,12 +68,6 @@
                 }
                 scope.content = fullHtml;
             }, true);
-            scope.preview = function(){
-                var pages = angular.copy(scope.pages);
-                renderView.show(scope.content).then(function(r){
-                    scope.content = r;
-                });                     
-            }
         }
 
         function getTemplateUrl(frontEndFramework){

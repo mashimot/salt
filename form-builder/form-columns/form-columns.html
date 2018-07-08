@@ -35,7 +35,6 @@
                         <div class="row py-2">
                             <h6 class="col">
                                 <div class="float-left">
-                                    <!--span class="badge handle" style="cursor: pointer;"><i class="fa fa-arrows-alt" role="button"></i></span-->
                                     <span edit-form-builder-data data="data" type-event="edit" class="badge btn-outline-primary">
                                         <i class="fa fa-edit fa-1x"></i> edit
                                     </span>
@@ -43,7 +42,7 @@
                             </h6>
                             <h6 class="col unsortable">
                                 <div class="float-right">
-                                    <span ng-click="column.data.splice(dataIndex, 1);" class="badge btn-outline-danger" style="cursor: pointer;">
+                                    <span ng-click="vmColumn.deleteData(column, dataIndex)" class="badge btn-outline-danger" style="cursor: pointer;">
                                         <i class="fas fa-window-close"></i>
                                     </span>
                                 </div>

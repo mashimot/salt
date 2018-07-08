@@ -9,7 +9,7 @@
             restrict: "E",
             templateUrl: 'form-builder/form-menu/form-menu.html',
             scope: {
-                data: '=',
+                pages: '=',
                 tools: '=',
                 pageModel: '=',
                 containers: '='
@@ -23,7 +23,7 @@
     function controller($scope){
         var vmMenu = this;
 
-        vmMenu.data = $scope.data;
+        vmMenu.pages = $scope.pages;
         vmMenu.tools = $scope.tools;
         vmMenu.containers = $scope.containers;
         vmMenu.pageModel = $scope.pageModel;
@@ -32,8 +32,8 @@
         vmMenu.grids = getGrid();
         
         vmMenu.newFile = function(){
-            vmMenu.data.pages = [];
-        }
+            vmMenu.pages = [];
+        };
         
         vmMenu.sortableNewPage = {
             //placeholder: 'card border border-primary ui-placeholder-highlight',
