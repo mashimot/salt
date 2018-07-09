@@ -4,7 +4,7 @@
             <section id="page" class="col-md-12">
                 <button class="btn btn-outline-success btn-block" ng-click="vmMenu.newFile()">New File</button>
                 <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.sortableNewPage">
-                    <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.data.pages.push({rows: [], name: 'Page Name ' + (vmMenu.data.pages.length + 1) })" class="btn btn-primary btn-block btn-sm" ng-binding ng-scope ui-sortable-handle>
+                    <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.newPage()" class="btn btn-primary btn-block btn-sm" ng-binding ng-scope ui-sortable-handle>
                         <i class="fa fa-file"></i> New Page
                     </span>
                 </div>

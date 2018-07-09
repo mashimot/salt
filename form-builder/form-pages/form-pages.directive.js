@@ -23,7 +23,7 @@
 	        	};
 
 				vmPage.deletePage = function(index){
-                    vmPage.data.pages.splice(index, 1);
+                    vmPage.pages.splice(index, 1);
 				}
 			},
 			controllerAs: 'vmPage'

@@ -28,8 +28,17 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <input type="text" name="text{{ id }}" ng-model="element.text" class="form-control form-control-sm"  ng-minlength="1" ng-change="elementChanged(content.html.elements)" required/>
-                            <div ng-messages="formName['text' + id].$error" role="alert">
+                            <input
+                                type="text"
+                                name="text{{ id }}"
+                                ng-model="element.text"
+                                class="form-control form-control-sm"
+                                ng-minlength="1"
+                                ng-change="elementChanged(content.html.elements)"
+                                ng-class="{ 'is-invalid': !formName['text' + id].$valid }"
+                                required
+                            />
+                            <div ng-messages="formName['text' + id].$error" class="invalid-feedback">
                                 <div ng-message="required">You did not enter a field</div>
                                 <div ng-message="minlength">Your field is too short</div>
                             </div>
@@ -37,8 +46,17 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
-                            <input type="text" name="value{{ id }}" ng-model="element.value" class="form-control form-control-sm" ng-minlength="1" ng-change="elementChanged(content.html.elements)" required/>
-                            <div ng-messages="formName['value' + id].$error" role="alert">
+                            <input
+                                type="text"
+                                name="value{{ id }}"
+                                ng-model="element.value"
+                                class="form-control form-control-sm"
+                                ng-minlength="1"
+                                ng-change="elementChanged(content.html.elements)"
+                                ng-class="{ 'is-invalid': !formName['value' + id].$valid }"
+                                required
+                            />
+                            <div ng-messages="formName['value' + id].$error" class="invalid-feedback">
                                 <div ng-message="required">You did not enter a field</div>
                                 <div ng-message="minlength">Your field is too short</div>
                             </div>

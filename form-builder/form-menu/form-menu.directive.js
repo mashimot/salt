@@ -34,7 +34,10 @@
         vmMenu.newFile = function(){
             vmMenu.pages = [];
         };
-        
+        vmMenu.newPage = function(){
+            vmMenu.pages.push({rows: [], name: 'Page Name ' + (vmMenu.pages.length + 1) })
+        };
+
         vmMenu.sortableNewPage = {
             //placeholder: 'card border border-primary ui-placeholder-highlight',
             placeholder: 'card p-1 mb-1 bg-primary text-white',

@@ -1,11 +1,16 @@
 <div class="form-group">
     <label for="title-text">Image source</label>
-    <input type="text" id="img-src" name="src" ng-model="content.html.src"  ng-minlength="5"  class="form-control"  required/>
-    <!--input type="file" name="" class="form-control">
-    <div ng-messages="formName.src.$error" role="alert">
+    <input
+        type="text"
+        id="img-src"
+        name="src"
+        ng-model="content.html.src"
+        ng-minlength="5"
+        class="form-control"
+        ng-class="{ 'is-invalid': !formName.$valid }"
+        required
+    />
+    <div ng-messages="formName.$error" class="invalid-feedback">
         <div ng-message="required">You did not enter a field</div>
-        <div ng-message="minlength">Your field is too short</div>
-    </div-->
-    <!--label for="title-color">Color</label>
-    <input type="text" id="title-color" ng-model="content.html.color" class="form-control" pattern="^#(([0-9a-fA-F]{2}){3}|([0-9a-fA-F]){3})$"/-->
+    </div>
 </div>

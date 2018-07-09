@@ -9,16 +9,12 @@
 
     function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView, Logger){
         var vm = this;
-        vm.joeys = [];
         vm.editPageName        = {};
         vm.preview             = '';
         vm.rows                = [];
-        vm.data                = {
-            pages: [],
-            type: 'tab'
-        };
         vm.pages = [];
-        //vm.pages = formDataService.getFormData();
+        vm.pages.push(formDataService.getFormData());
+        //console.log(formDataService.getFormData());
         vm.loading             = false;
         vm.reverse             = true;
         vm.pageModel           = pageModel();

@@ -265,16 +265,6 @@ class CreateTableToJson {
     getString(){
         return this._string;
     }
-    isFloat(val) {
-        var floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
-        if (!floatRegex.test(val))
-            return false;
-
-        val = parseFloat(val);
-        if(isNaN(val))
-            return false;
-        return true;
-    }
     getError(){
         return this._errors;
     }
@@ -319,6 +309,16 @@ class CreateTableToJson {
 
         var intVal = parseInt(val, 10);
         return parseFloat(val) == intVal && !isNaN(intVal);
+    }
+    isFloat(val) {
+        var floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
+        if (!floatRegex.test(val))
+            return false;
+
+        val = parseFloat(val);
+        if(isNaN(val))
+            return false;
+        return true;
     }
 }
 

@@ -70,7 +70,7 @@
                 </div>
             </div>
         </form-builder>
-        <section class="pt-3">
+        <section class="pt-3" ng-if="vm.pages.length > 0">
             <form name="json" class="border border-primary">
                 <div ng-model="vm.pages" ng-repeat="(pageIndex, page) in vm.pages" class="px-2 py-2">
                     <div class="">
