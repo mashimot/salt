@@ -53,16 +53,16 @@
                                             for(var m = 0; m < data.length; m++){
                                                 var d = data[m];
                                                 RenderHtml.setParams(d);
-                                                dataHtml += RenderHtml.getByType(0)[d.html.tag];
+                                                dataHtml += "\n\t\t\t" + RenderHtml.getByType(0)[d.html.tag];
                                             }
                                         }
-                                        columnHtml += `\n\t\t<div class="col-md-${grid[j]}">\n\t\t\t${dataHtml}\n\t\t</div>`;
+                                        columnHtml += `\n\t\t<div class="col-md-${grid[j]}">${dataHtml}\n\t\t</div>`;
                                     }
                                 }
                                 rowHtml += `\n\t<div class="row">${columnHtml}\n\t</div>`;
                             }
                         }
-                        pageHtml += `<section class="page-${k + 1}">${rowHtml}\n</section>\n`;
+                        pageHtml += `\n<section class="page-${k + 1}">${rowHtml}\n</section>`;
                         fullHtml += pageHtml;
                     }
                 }

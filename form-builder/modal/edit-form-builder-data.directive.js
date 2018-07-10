@@ -91,11 +91,11 @@
                     $scope.ok           = ok;
 
                     //look at TabService, hide some inputs
-                    if(render.hide.length){
+                    /*if(render.hide.length){
                         for(var i = 0; i < render.hide.length; i++){
                             $scope[render.hide[i]] = true;
                         }
-                    }
+                    }*/
                     //verifica se houve alguma atualiazação no model
                     $scope.$watch('content', function(newValue, oldValue) {
                         if(angular.equals(newValue, angular.copy(data))){

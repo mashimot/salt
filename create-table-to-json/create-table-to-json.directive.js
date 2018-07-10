@@ -332,8 +332,9 @@ class BootstrapGridSystem{
 
     convert(){
         var groups      = [];
-        var arrGrid     = (this._grid).split(' ');
-        var grid        = this._grid;
+        var grid        = this._grid.replace(/ +/g, ' ').trim();
+        var arrGrid     = grid.split(' ');
+
         var chunkSize   = arrGrid.length;
         var page = {
             rows: [],

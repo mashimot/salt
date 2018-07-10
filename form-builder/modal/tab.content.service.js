@@ -28,52 +28,55 @@
             this.render = function () {
                 return {
                     'h1': {
-                        tabs: [tabs.title], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.title]                        
                     },
+                    'h2': {
+                        tabs: [tabs.title]
+                    },
+                    'h3': {
+                        tabs: [tabs.title]
+                    },
+                    'h4': {
+                        tabs: [tabs.title]
+                    },
+                    'h5': {
+                        tabs: [tabs.title]
+                    },
+                    'h6': {
+                        tabs: [tabs.title]
+                    },                    
                     'legend': {
-                        tabs: [tabs.title], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.title]
                     },
                     'radio': {
-                        tabs: [tabs.general, tabs.choices], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general, tabs.choices]
                     },                    
                     'checkbox': {
-                        tabs: [tabs.general, tabs.choices], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general, tabs.choices]
                     },
                     'select': {
-                        tabs: [tabs.general, tabs.choices], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general, tabs.choices]
                     },
                     'textarea': {
-                        tabs: [tabs.general], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general]
                     },
                     'text': {
-                        tabs: [tabs.general], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general]
                     },
                     'date': {
-                        tabs: [tabs.general], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general]
                     },
                     'image': {
-                        tabs: [tabs.img], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.img]
                     },
                     'html': {
-                        tabs: [tabs.htmlEditor], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.htmlEditor]
                     },
                     'table': {
-                        tabs: [tabs.table], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.table]
                     },                    
                     'file': {
-                        tabs: [tabs.general], //is an array
-                        hide: [] //ng-hide
+                        tabs: [tabs.general]
                     }
                 };
             };

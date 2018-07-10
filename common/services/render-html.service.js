@@ -93,8 +93,7 @@ angular.module('app')
                             ${elements.map( element => `<option value="${element.value}">${element.text}</option>` ).join('')}
                         </select>
                     </div>
-                    <!-- ${name} -->
-                    `
+                    <!-- ${name} -->`
                 ,
                 "checkbox":
                     `
@@ -103,8 +102,7 @@ angular.module('app')
                         <label for="i_${name}">${labelName}</label>
                         ${elements.map( element => `<div class="checkbox"><label><input type="checkbox" name="${name}" value="${element.value}"> ${element.text}</label></div>`).join('')}
                     </div>
-                    <!-- end ${name} -->
-                    `
+                    <!-- end ${name} -->`
                 ,
                 "radio":
                     `
@@ -113,8 +111,7 @@ angular.module('app')
                         <label for="i_${name}">${labelName}</label>
                         ${elements.map( element => `<div class="radio"><label><input type="radio" name="${name}" value="${element.value}"> ${element.text}</label></div>`).join('')}
                     </div>
-                    <!-- end ${name} -->
-                    `
+                    <!-- end ${name} -->`
                 ,                
                 "text":
                     `
@@ -123,8 +120,7 @@ angular.module('app')
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control" name="${name}" id="i_${name}" value=""  ${ nullable? `` : `required` }>
                     </div>                
-                    <!-- end ${name} -->
-                    `
+                    <!-- end ${name} -->`
                 ,
                 "number": 
                     `
@@ -133,17 +129,16 @@ angular.module('app')
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control number" name="${name}" id="i_${name}" value="" readonly ${ nullable? `` : `required` }>
                     </div>                    
-                    <!-- end ${name} -->
-                    `
+                    <!-- end ${name} -->`
                 ,
                 "date":
-                   `<!-- start ${name} -->
+                   `
+                    <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
                         <input type="text" class="form-control date" name="${name}" id="i_${name}" value="" ${ nullable? `` : `required` }>
                     </div>
-                    <!-- end ${name} -->
-                    `
+                    <!-- end ${name} -->`
             }
         }
         function vuejs(){
