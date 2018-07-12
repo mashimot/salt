@@ -15,6 +15,7 @@
 				vmRow.sortableRowBetweenPage = { 
 					connectWith: '.connect-page-row', 
 					placeholder: 'p-1 mb-1 bg-primary text-white',
+					handle: '.row-handle',
 					stop: function(){
                         Logger.success('Row successfully updated!');
                     }

@@ -3,7 +3,7 @@
         Place Bootstrap grid columns here
     </div>
     <div ng-model="row" ng-repeat="(rowIndex, row) in page.rows" ng-if="page.rows.length > 0">
-        <div class="row">
+        <div class="row row-handle" style="cursor: move;">
             <div class="col">
                 <div class="float-left">
                     <small><strong>row <span ng-bind="rowIndex + 1"></span></strong></small>

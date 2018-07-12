@@ -33,7 +33,7 @@
                     
                     scope.elementChanged = function(e){
                         scope.text.string = elementToString(e);
-                    }
+                    };
 
                     function addElement() {
                         scope.content.html.elements.push({
@@ -50,7 +50,7 @@
                                 var str = string[i];
                                 var firstMatch = str;
                                 var secondMatch = '';
-                                if(str.indexOf('|') != -1){
+                                if(str.indexOf('|') !== -1){
                                     var match = str.split('|');
                                     firstMatch = match[0];
                                     //var secondMatch = match[1];
@@ -72,19 +72,20 @@
                     }
 
                     function orderBy(type){
-                        if(scope.sortType != type){
+                        if(scope.sortType !== type){
                             scope.sortReverse = true;
                         }
                         scope.sortReverse = !scope.sortReverse;
                         scope.sortType    = type;
                         var sort = CollectionService.sortBy(type, scope.sortReverse);
                         scope.content.html.elements.sort(sort);
+                        scope.text.string = elementToString(scope.content.html.elements);
                     }
 
                     function cloneThis(name, elements){
                         var elementsLength = elements.length;
                         if(elementsLength > 0){
-                            var cloneThisObjectName = (name == 'value')? 'text' : 'value';
+                            var cloneThisObjectName = (name === 'value')? 'text' : 'value';
                             for(var i = 0; i < elementsLength; i++){
                                 elements[i][name] = elements[i][cloneThisObjectName];
                             }
@@ -101,13 +102,13 @@
                     if(e.length > 0){
                         for(var i = 0; i < e.length; i++){
                             var str = e[i];
-                            var pipe = (str.value == '')? '' : '|';
+                            var pipe = (str.value === '')? '' : '|';
                             var element = {
                                 text: typeof str.text !== 'undefined'? str.text : '',
                                 value: typeof str.value !== 'undefined'? str.value : '',
                             };
 
-                            string += (element.text + pipe + element.value) + (i == e.length - 1 ? '' : "\n");
+                            string += (element.text + pipe + element.value) + (i === e.length - 1 ? '' : "\n");
                         }
                     }
                 }

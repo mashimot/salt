@@ -19,7 +19,8 @@
 
 				vmPage.sortablePage = {
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-		            placeholder: 'p-1 mb-1 bg-primary text-white'
+		            placeholder: 'p-1 mb-1 bg-primary text-white',
+					//handle: '.page-handle'
 	        	};
 
 				vmPage.deletePage = function(index){

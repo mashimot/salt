@@ -20,11 +20,11 @@
                     column.data.splice(dataIndex, 1);
                 };
 
-		        vmColumn.sortableOptions = {
+		        vmColumn.dataSortable = {
 		            connectWith: '.connected-drop-target-sortable',
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',
 					placeholder: 'p-1 mb-1 bg-primary text-white',
-		            //handle: '.handle',
+		            handle: '.data-handle',
 		            cancel: ".unsortable",
                     stop: function(event, ui){
                         Logger.success('Data successfully updated!');
@@ -34,6 +34,7 @@
 		        vmColumn.columnSortable = {
 		            placeholder: 'card border border-primary ui-placeholder-highlight',
 		            //placeholder: 'card p-1 mb-1 bg-primary text-white',
+					handle: '.column-handle',
 		            start: function(event, ui){
 		                ui.placeholder.addClass(ui.item.attr("class"));
 		            },

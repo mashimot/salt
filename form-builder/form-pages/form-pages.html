@@ -1,6 +1,6 @@
 <div ng-model="vmPage.pages" class="connected-pages" ui-sortable="vmPage.sortablePage">
     <div ng-repeat="(pageIndex, page) in vmPage.pages">
-        <div class="row">
+        <div class="row page-handle">
             <div class="col-md-10">
                 <strong><span ng-bind="page.name" class="text-danger"></span></strong>
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-3 py-3 border border-primary">
+        <div class="px-3 py-3 border border-primary bg-white text-dark">
             <form-rows></form-rows>
         </div>
     </div><!--/.ng-repeat-->
