@@ -12,7 +12,8 @@
                 pages: '=',
                 tools: '=',
                 pageModel: '=',
-                containers: '='
+                containers: '=',
+                renderHtml: '='
             },
             controller: controller,
             controllerAs: 'vmMenu'
@@ -25,6 +26,7 @@
 
         vmMenu.pages = $scope.pages;
         vmMenu.tools = $scope.tools;
+        vmMenu.renderHtml = $scope.renderHtml;
         vmMenu.containers = $scope.containers;
         vmMenu.pageModel = $scope.pageModel;
         vmMenu.bootstrap = [{ "grid": "6 6", "columns": [] }];
@@ -42,7 +44,7 @@
             //placeholder: 'card border border-primary ui-placeholder-highlight',
             placeholder: 'card p-1 mb-1 bg-primary text-white',
             connectWith: '.connected-pages',
-            update: function(event, ui){
+            update: function(event, ui){                
                 vmMenu.pageModel = angular.copy(vmMenu.pageModel);
             }
         };
@@ -74,9 +76,20 @@
 
         vmMenu.toolSortable = {
             connectWith: '.connected-drop-target-tool',
-            //placeholder: 'card border border-primary ui-placeholder-highlight' ,
-            placeholder: 'card p-1 mb-1 bg-primary text-white',            
-            handle: '.tool-handle',
+            placeholder: 'card p-1 mb-1 bg-primary text-white',
+            //placeholder: 'card border border-primary ui-placeholder-highlight',
+            //handle: '.tool-handle',
+            start: function(event, ui){
+                console.log(ui.item.sortable.model);
+                if(typeof ui.item.sortable.model.html !== 'undefined') {
+                    var model = ui.item.sortable.model;
+                    var newHtml = vmMenu.renderHtml;
+                    newHtml.setParams(model);
+                    var html = newHtml.getHtml();
+                    ui.item.startHtml = ui.item.html();
+                    ui.item.html("<div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9;'>" + html[model.html.tag] + "</div>");
+                }
+            },
             stop: function(event, ui){
                 vmMenu.tools = angular.copy(vmMenu.tools);
                 var currentModel = ui.item.sortable.model;
@@ -88,6 +101,7 @@
                         currentModel.table.columnName = 'name' + uid;
                     }
                 }
+                ui.item.html(ui.item.startHtml);
             }
         };
     }

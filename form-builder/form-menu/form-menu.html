@@ -1,5 +1,5 @@
 <section class="sticky-top scrollable">
-    <div class="px-1 py-1 border border-info">
+    <div class="px-1 py-1">
         <div class="row">
             <section id="page" class="col-md-12">
                 <button class="btn btn-outline-success btn-block" ng-click="vmMenu.newFile()">New File</button>
@@ -8,7 +8,7 @@
                         <i class="fa fa-file"></i> New Page
                     </span>
                 </div>
-                <form action="http://devemetodo.unisa.br/teste" method="POST" target="_blank">
+                <form action="" method="POST" target="_blank">
                     <button type="submit" class="btn btn-danger btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
                     <input type="hidden" name="json_data" value="{{ vmMenu.data }}">
                 </form>
@@ -66,20 +66,20 @@
                     </div>
                 </ng-form>
             </section>
-        </div>        
-        <section id="tools" class="py-1">
-            <div ng-model="vmMenu.tools">
-                <div ng-repeat="(toolCategoryIndex, toolCategory) in vmMenu.tools | groupBy: 'html.category'">
-                    <strong><span class="text-center text-uppercase" ng-bind="toolCategory[0].html.category"</span></strong>
-                    <div ng-model="toolCategory" ui-sortable="vmMenu.toolSortable">
-                        <div ng-repeat="(toolIndex, tool) in toolCategory" class="btn btn-outline-danger btn-sm col-md-6">
-                            <div class="tool-handle" style="cursor: move">
-                                <span ng-bind="tool.html.tag"></span>
-                            </div>
+        </div>
+        <div class="row">
+            <section id="tools" class="col-md-12 py-1">        
+                <div ng-model="vmMenu.tools">
+                    <div ng-repeat="(toolCategoryIndex, toolCategory) in vmMenu.tools | groupBy: 'html.category'">
+                        <strong><span class="text-center text-uppercase" ng-bind="toolCategory[0].html.category"></span></strong>
+                        <div ng-model="toolCategory" ui-sortable="vmMenu.toolSortable">
+                            <ul ng-repeat="(toolIndex, tool) in toolCategory" class="list-group">
+                                <li ng-bind="tool.html.tag" class="list-group-item"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>      
-        </section>
+            </section>
+        </div>    
     </div>
 </section>

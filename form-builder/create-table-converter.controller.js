@@ -5,21 +5,22 @@
     angular.module('new.app')
         .controller('CreateTableConverterController', CreateTableConverterController);
 
-    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService', 'renderView', 'Logger'];
+    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService', 'Logger', 'RenderHtml'];
 
-    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, renderView, Logger){
+    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, Logger, RenderHtml){
         var vm = this;
-        vm.editPageName        = {};
         vm.preview             = '';
+        vm.editPageName        = {};
+        
         vm.rows                = [];
-        vm.pages = [];
+        vm.pages               = [];
         vm.pages.push(formDataService.getFormData());
-        //console.log(formDataService.getFormData());
         vm.loading             = false;
         vm.reverse             = true;
         vm.pageModel           = pageModel();
         vm.tags                = getTags();
         vm.tools               = HtmlElementsService.getHtmlElements();
+        vm.renderHtml          = RenderHtml;
         vm.dominio             = {
             error: {
                 has: false,

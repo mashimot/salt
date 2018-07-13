@@ -20,7 +20,7 @@ angular.module('app')
 		var service = {
             render : render,
             setParams : setParams,
-            getByType : getByType
+            getHtml : _default
 		};
 		return service;
 
@@ -48,17 +48,7 @@ angular.module('app')
             return partialView;
         }
 
-		function getByType(type){
-            switch(type){
-                case 0:
-                    return _default();
-                default:
-                    return false;
-                break;
-            }
-		}
         function _default(){
-
             return {
                 "html": `${htmlData}`,
                 "legend": `<legend>${text}</legend>`,
