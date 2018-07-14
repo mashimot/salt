@@ -20,7 +20,7 @@ angular.module('app')
 		var service = {
             render : render,
             setParams : setParams,
-            getHtml : _default
+            getHtml :  _default
 		};
 		return service;
 
@@ -126,7 +126,7 @@ angular.module('app')
                     <!-- start ${name} -->
                     <div class="form-group" id="div_${name}">
                         <label for="i_${name}">${labelName}</label>
-                        <input type="text" class="form-control date" name="${name}" id="i_${name}" value="" ${ nullable? `` : `required` }>
+                        <input type="date" class="form-control" name="${name}" id="i_${name}" value="" ${ nullable? `` : `required` }>
                     </div>
                     <!-- end ${name} -->`
             }

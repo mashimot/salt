@@ -13,27 +13,9 @@
 			controller: function($scope){
 				var vmColumn 			= this;
 				var vmPage 				= $scope.vmPage;
-				vmColumn.showOptions  	= -1;
-				vmColumn.data 			= $scope.data;
-
-                vmColumn.deleteData = function(column, dataIndex){
-                    column.data.splice(dataIndex, 1);
-                };
-
-		        vmColumn.dataSortable = {
-		            connectWith: '.connected-drop-target-sortable',
-		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-					placeholder: 'p-1 mb-1 bg-primary text-white',
-		            handle: '.data-handle',
-		            cancel: ".unsortable",
-                    stop: function(event, ui){
-                        Logger.success('Data successfully updated!');
-                    }
-		        };
-
+				
 		        vmColumn.columnSortable = {
 		            placeholder: 'card border border-primary ui-placeholder-highlight',
-		            //placeholder: 'card p-1 mb-1 bg-primary text-white',
 					handle: '.column-handle',
 		            start: function(event, ui){
 		                ui.placeholder.addClass(ui.item.attr("class"));

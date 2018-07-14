@@ -63,18 +63,18 @@
         </div>
         <div class="modal-body">
             <div class="card">
+                <div class="card-header">
+                    <render-content data="content"></render-content>
+                </div>
                 <div class="card-body">
-                    <render-content content="content"></render-content>
+                    <div ng-repeat="(i, tab) in render.tabs" class="py-2">
+                        <h4 ng-bind="tab.title" class="px-3 py-2 bg-danger text-white"></h4>
+                        <span bind-html-compile="tab.template"></span>
+                    </div>
                 </div>
             </div>
-            <uib-tabset active="activeConfig">
-                <uib-tab ng-repeat="(i, tab) in render.tabs" heading="{{ tab.title }}" index="i">
-                    <span bind-html-compile="tab.template"></span>
-                </uib-tab>
-            </uib-tabset>
         </div>
         <div class="modal-footer">
-            <!--pre ng-bind="content | json"></pre-->
             <button type="submit" class="btn btn-primary" >OK</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>

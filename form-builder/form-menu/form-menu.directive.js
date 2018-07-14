@@ -2,9 +2,9 @@
     angular.module('app')
         .directive('formMenu', formMenu);
 
-    formMenu.$inject = [];
+    formMenu.$inject = ['RenderHtml'];
 
-    function formMenu(){
+    function formMenu(RenderHtml){
         var directive = {
             restrict: "E",
             templateUrl: 'form-builder/form-menu/form-menu.html',
@@ -12,8 +12,7 @@
                 pages: '=',
                 tools: '=',
                 pageModel: '=',
-                containers: '=',
-                renderHtml: '='
+                containers: '='
             },
             controller: controller,
             controllerAs: 'vmMenu'
@@ -21,16 +20,13 @@
         return directive;
     }
 
-    function controller($scope){
+    function controller($scope, RenderHtml ){
         var vmMenu = this;
-
         vmMenu.pages = $scope.pages;
         vmMenu.tools = $scope.tools;
-        vmMenu.renderHtml = $scope.renderHtml;
         vmMenu.containers = $scope.containers;
         vmMenu.pageModel = $scope.pageModel;
         vmMenu.bootstrap = [{ "grid": "6 6", "columns": [] }];
-        vmMenu.PreviewUrl = "";
         vmMenu.grids = getGrid();
         
         vmMenu.newFile = function(){
@@ -83,9 +79,8 @@
                 console.log(ui.item.sortable.model);
                 if(typeof ui.item.sortable.model.html !== 'undefined') {
                     var model = ui.item.sortable.model;
-                    var newHtml = vmMenu.renderHtml;
-                    newHtml.setParams(model);
-                    var html = newHtml.getHtml();
+                    RenderHtml.setParams(model);
+                    var html = RenderHtml.getHtml();
                     ui.item.startHtml = ui.item.html();
                     ui.item.html("<div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9;'>" + html[model.html.tag] + "</div>");
                 }

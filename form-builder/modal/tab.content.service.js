@@ -4,10 +4,10 @@
         .service('TabService', function () {
             var tabs = {
                 general: {
-                    title: "Configuração Geral", template: '<general-tab content="content" form-name="editModal"></general-tab>'
+                    title: "General Configuration", template: '<general-tab content="content" form-name="editModal"></general-tab>'
                 },
                 choices: {
-                    title: "Escolhas", template: '<choices-tab content="content" form-name="editModal"></choices-tab>'
+                    title: "Choices", template: '<choices-tab content="content" form-name="editModal"></choices-tab>'
                 },
                 visibleIf: {
                     title: "Vísivel Se", template: '<hide-when-tab content="content"></hide-when-tab>'

@@ -10,12 +10,12 @@
 			templateUrl: 'form-builder/form-pages/form-pages.html',
 			scope: {
 				pages: '=',
-                teste: '='
+                renderHtml: '='
 			},
 			controller: function($scope){
 				var vmPage = this;
 				vmPage.pages = $scope.pages;
-                vmPage.teste = $scope.teste;
+                vmPage.renderHtml = $scope.renderHtml;
 
 				vmPage.sortablePage = {
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',

@@ -57,10 +57,10 @@
         <form-builder>
             <div class="row">
                 <div class="col-md-3">
-                    <form-menu pages="vm.pages" render-html="vm.renderHtml" tools="vm.tools" page-model="vm.pageModel"></form-menu>
+                    <form-menu pages="vm.pages" tools="vm.tools" page-model="vm.pageModel"></form-menu>
                 </div>
                 <div class="col-md-9">
-                    <form-pages pages="vm.pages" teste="vm.joeys"></form-pages>
+                    <form-pages pages="vm.pages"></form-pages>
                 </div>
             </div>
         </form-builder>
@@ -277,6 +277,7 @@
 <script src="form-builder/form-pages/form-pages.directive.js"></script>
 <script src="form-builder/form-rows/form-rows.directive.js"></script>
 <script src="form-builder/form-columns/form-columns.directive.js"></script>
+<script src="form-builder/form-data/form-data.directive.js"></script>
 
 <script src="form-builder/modal/edit-form-builder-data.directive.js"></script>
 <script src="form-builder/modal/config/config.choices.client.directive.js"></script>
@@ -344,123 +345,6 @@
             </div>
         </div>
     </div>
-</script>
-
-<!-- templates -->
-<script type="text/ng-template" id="render-content.html">
-        <!--CATEGORY: TABLES-->
-        <section ng-if="d.html.category === 'table'">
-            <div ng-if="d.html.fields.length > 0">
-                <table class="table table-stripped">
-                    <thead>
-                        <tr>
-                            <th ng-repeat="(key, field) in d.html.fields[0]">
-                                <span ng-bind="key"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="field in d.html.fields track by $index" ng-model="content.html.fields">
-                            <td ng-repeat="(key, f) in d.html.fields[0]" >
-                                <span ng-bind="field[key]"></span>
-                            <td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <h6 class="alert alert-danger" ng-if="d.html.fields.length <= 0">
-                <i class="fa fa-exclamation-triangle"></i> Empty Table
-            </h6>
-        </section>
-        <!--CATEGORY: FORMATTING-->
-        <section ng-if="d.html.category === 'formatting'">
-            <legend ng-if="d.html.tag === 'legend'" ng-bind="d.html.text"></legend>
-        </section>
-
-        <!--CATEGORY: HEADINGS-->
-        <section ng-if="d.html.category === 'headings'">
-            <div ng-class="{ '{{ d.html.class }}': d.html.class.trim() !== '' }">
-                <h1 ng-if="d.html.tag === 'h1'" ng-bind="d.html.text"></h1>
-                <h2 ng-if="d.html.tag === 'h2'" ng-bind="d.html.text"></h2>
-                <h3 ng-if="d.html.tag === 'h3'" ng-bind="d.html.text"></h3>
-                <h4 ng-if="d.html.tag === 'h4'" ng-bind="d.html.text"></h4>
-                <h5 ng-if="d.html.tag === 'h5'" ng-bind="d.html.text"></h5>
-                <h6 ng-if="d.html.tag === 'h6'" ng-bind="d.html.text"></h6>
-                <legend ng-if="d.html.tag === 'legend'" ng-bind="d.html.text"></legend>
-            </div>
-        </section>
-
-        <section ng-if="d.html.category === 'html'" class="form-group html-form">
-            <span ng-bind-html="d.html.data" ng-if="d.html.tag == 'html'"></span>
-            <img src="{{ d.html.src }}" ng-if="d.html.tag == 'image'" class="img-fluid">
-        </section>
-
-        <!--CATEGORY: FORM-->
-        <section ng-if="d.html.category === 'form'" class="form-group html-form">
-            <!abel for="i_{{ d.table.columnName }}">{{ d.html.label }}</label>
-            <label ng-class="{'badge-success': d.table.nullable, 'badge-danger' : !d.table.nullable}" class="badge" style="cursor: pointer;">
-                <input type="checkbox" ng-model="d.table.nullable" class="checkbox" style="display: none;">
-                <span ng-if="d.table.nullable">required</span>
-                <span ng-if="!d.table.nullable">not required</span>
-            </label>
-            <!--FILe-->
-            <div ng-if="d.html.tag == 'file'">
-                <span class="btn btn-primary btn-block">
-                    <input type="file" id="i_{{ d.table.columnName }}">
-                </span>
-            </div>
-
-            <!--DATE-->
-            <div ng-if="d.html.tag == 'date'">
-                <input type="date" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control datepicker" />
-            </div>
-            <!--NUMBER-->
-            <div ng-if="d.html.tag == 'number'">
-                <input type="number" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control" />
-            </div>
-            <!--TEXT-->
-            <div ng-if="d.html.tag == 'text'">
-                <input type="text" id="i_{{ d.table.columnName }}" placeholder="{{ d.html.tag }} | {{ d.table.type }}" class="form-control" />
-            </div>
-            <!--TEXTAREA-->
-            <div ng-if="d.html.tag == 'textarea'">
-                <textarea id="i_{{ d.table.columnName }}" name="{{ d.table.columnName }}" class="form-control">{{ d.html.tag }} | {{ d.table.type }}</textarea>
-            </div>
-            <!--SELECT-->
-            <div ng-if="d.html.tag == 'select'">
-                <div ng-class="{ 'is-invalid': !d.html.elements.length <= 0 }">
-                    <select id="i_{{ d.table.columnName }}" class="form-control" ng-class="{ 'is-invalid': !d.html.elements, 'is-invalid': d.html.elements.length <= 0 }">
-                        <option value="">Selecione um Valor</option>
-                        <option ng-repeat="content in d.html.elements" value="{{ content.value }}">{{ content.text }}</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        <i class="fa fa-exclamation-triangle"></i> Empty Options
-                    </div>
-                </div>
-            </div>
-            <!--RADIO-->
-            <div ng-if="d.html.tag == 'radio'">
-                <div ng-repeat="content in d.html.elements" ng-model="d.html.elements" class="radio">
-                    <label>
-                        <input type="radio" name="{{ d.table.columnName }}" value="{{ content.value }}" class="radio" ng-class="{ 'is-invalid': !d.html.elements }"> {{ content.text }}
-                    </label>
-                </div>
-                <div class="invalid-feedback">
-                    <i class="fa fa-exclamation-triangle"></i> Empty Radio
-                </div>
-            </div>
-            <!--CHECKBOX-->
-            <div ng-if="d.html.tag == 'checkbox'" ng-class="{ 'is-invalid': !d.html.elements }">
-                <div ng-repeat="content in d.html.elements" ng-model="d.html.elements" class="checkbox">
-                    <label>
-                        <input type="checkbox" name="{{ d.table.columnName }}" value="{{ content.value }}" class="checkbox" ng-class="{ 'is-invalid': !d.html.elements }"> {{ content.text }}
-                    </label>
-                </div>
-                <div class="invalid-feedback">
-                    <i class="fa fa-exclamation-triangle"></i> Empty Checkbox
-                </div>                
-            </div>                                                
-        </section>
 </script>
 </body>
 </html>

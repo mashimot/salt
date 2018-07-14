@@ -5,9 +5,9 @@
     angular.module('new.app')
         .controller('CreateTableConverterController', CreateTableConverterController);
 
-    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService', 'Logger', 'RenderHtml'];
+    CreateTableConverterController.$inject = ['$scope', '$q', '$uibModal', 'LanguageToolService', 'DominioService', 'HtmlElementsService', 'formDataService'];
 
-    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService, Logger, RenderHtml){
+    function CreateTableConverterController($scope, $q, $uibModal, LanguageToolService, DominioService, HtmlElementsService, formDataService ){
         var vm = this;
         vm.preview             = '';
         vm.editPageName        = {};
@@ -20,7 +20,6 @@
         vm.pageModel           = pageModel();
         vm.tags                = getTags();
         vm.tools               = HtmlElementsService.getHtmlElements();
-        vm.renderHtml          = RenderHtml;
         vm.dominio             = {
             error: {
                 has: false,
