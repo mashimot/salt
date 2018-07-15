@@ -21,7 +21,8 @@
                     }
 				};
 			},
-			controllerAs: 'vmRow'
+			controllerAs: 'vmRow',
+            bindToController: true
 		}	
 	}
 })();

@@ -45,7 +45,8 @@
                     }
 		        };
 			},
-			controllerAs: 'vmColumn'
+			controllerAs: 'vmColumn',
+            bindToController: true
 		}
 	}
 })();

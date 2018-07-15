@@ -1,5 +1,5 @@
 <div ui-sortable="vmRow.sortableRowBetweenPage" ng-model="page.rows" class="connected-bootstrap-grid connect-page-row">
-    <div class="alert alert-danger" role="alert" ng-if="page.rows.length <= 0">
+    <div class="px-3 py-3 bg-danger text-white" ng-if="page.rows.length <= 0">
         Place Bootstrap grid columns here
     </div>
     <div ng-model="row" ng-repeat="(rowIndex, row) in page.rows" ng-if="page.rows.length > 0">

@@ -28,7 +28,8 @@
 		        };				
 				
 			},
-			controllerAs: 'vmData'
+			controllerAs: 'vmData',
+            bindToController: true
 		}	
 	}
 })();

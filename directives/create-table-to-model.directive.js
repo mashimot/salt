@@ -15,7 +15,8 @@
                 model   : '='
             },
             link: link,
-            controller: controller
+            controller: controller,
+            bindToController: true
         };
         function controller($scope){
             $scope.model = model();

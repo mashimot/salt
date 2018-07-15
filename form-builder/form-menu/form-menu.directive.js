@@ -2,52 +2,47 @@
     angular.module('app')
         .directive('formMenu', formMenu);
 
-    formMenu.$inject = ['RenderHtml'];
+    formMenu.$inject = [];
 
-    function formMenu(RenderHtml){
-        var directive = {
-            restrict: "E",
+    function formMenu(){
+        return {
+            restrict: "EA",
             templateUrl: 'form-builder/form-menu/form-menu.html',
             scope: {
-                pages: '=',
+                pages: '=pages',
                 tools: '=',
-                pageModel: '=',
-                containers: '='
+                pageModel: '='
             },
             controller: controller,
-            controllerAs: 'vmMenu'
+            controllerAs: 'vmMenu',
+            bindToController: true
         };
-        return directive;
     }
 
-    function controller($scope, RenderHtml ){
+    function controller($scope, RenderHtml){
         var vmMenu = this;
         vmMenu.pages = $scope.pages;
         vmMenu.tools = $scope.tools;
-        vmMenu.containers = $scope.containers;
         vmMenu.pageModel = $scope.pageModel;
         vmMenu.bootstrap = [{ "grid": "6 6", "columns": [] }];
         vmMenu.grids = getGrid();
-        
         vmMenu.newFile = function(){
-            vmMenu.pages = [];
+            $scope.$parent.vm.pages = new Array();
         };
         vmMenu.newPage = function(){
             vmMenu.pages.push({rows: [], name: 'Page Name ' + (vmMenu.pages.length + 1) })
         };
 
         vmMenu.sortableNewPage = {
-            //placeholder: 'card border border-primary ui-placeholder-highlight',
             placeholder: 'card p-1 mb-1 bg-primary text-white',
             connectWith: '.connected-pages',
-            update: function(event, ui){                
+            update: function(event, ui){
                 vmMenu.pageModel = angular.copy(vmMenu.pageModel);
             }
         };
-        
+
         vmMenu.sortableContainers = {
             connectWith: '.connected-bootstrap-grid',
-            //placeholder: 'card border border-danger ui-placeholder-highlight',
             placeholder: 'card p-1 mb-1 bg-primary text-white',
             update: function(event, ui){
                 var oldModel = ui.item.sortable.model;
@@ -65,7 +60,6 @@
                     updateModel.columns = columns;
                 }
 
-                vmMenu.containers = angular.copy(vmMenu.containers);
                 vmMenu.bootstrap = [{ "grid": "6 6", "columns": [] }];
             }
         };
@@ -73,10 +67,8 @@
         vmMenu.toolSortable = {
             connectWith: '.connected-drop-target-tool',
             placeholder: 'card p-1 mb-1 bg-primary text-white',
-            //placeholder: 'card border border-primary ui-placeholder-highlight',
             //handle: '.tool-handle',
             start: function(event, ui){
-                console.log(ui.item.sortable.model);
                 if(typeof ui.item.sortable.model.html !== 'undefined') {
                     var model = ui.item.sortable.model;
                     RenderHtml.setParams(model);

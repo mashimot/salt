@@ -3,12 +3,7 @@
         <div class="row">
             <section id="page" class="col-md-12">
                 <button class="btn btn-outline-success btn-block" ng-click="vmMenu.newFile()">New File</button>
-                <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.sortableNewPage">
-                    <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.newPage()" class="btn btn-primary btn-block btn-sm" ng-binding ng-scope ui-sortable-handle>
-                        <i class="fa fa-file"></i> New Page
-                    </span>
-                </div>
-                <form action="" method="POST" target="_blank">
+                <form action="http:" method="POST" target="_blank">
                     <button type="submit" class="btn btn-danger btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
                     <input type="hidden" name="json_data" value="{{ vmMenu.data }}">
                 </form>
@@ -29,6 +24,11 @@
         </div>
         <div class="row">
             <section id="containers" class="col-md-12">
+                <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.sortableNewPage">
+                    <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.newPage()" class="btn btn-primary btn-block btn-sm">
+                        <i class="fa fa-file"></i> New Page
+                    </span>
+                </div>
                 <ng-form name="bootstrap_container" ng-model="vmMenu.bootstrap" ui-sortable="vmMenu.sortableContainers">
                     <div ng-repeat="b in vmMenu.bootstrap">
                         <div ng-if="!bootstrap_container.$invalid">

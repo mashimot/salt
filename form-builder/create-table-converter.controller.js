@@ -11,7 +11,6 @@
         var vm = this;
         vm.preview             = '';
         vm.editPageName        = {};
-        
         vm.rows                = [];
         vm.pages               = [];
         vm.pages.push(formDataService.getFormData());

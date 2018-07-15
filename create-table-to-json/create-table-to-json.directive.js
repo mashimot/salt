@@ -368,7 +368,6 @@ class BootstrapGridSystem{
             }
         }
     }
-
     getPage(){
         return this._page;
     }
@@ -383,18 +382,17 @@ class BootstrapGridSystem{
 		return {
 			templateUrl: 'create-table-to-json/create-table-to-json.html',
 			scope: {
-                pages: '=',
-                joeys: '='
+                pages: '='
 			},
 			controller: controller,
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+            bindToController: true
 		};		
 	}
 
 	function controller($scope, Logger){
 		var vm = this;
 	    vm.pages = $scope.pages;
-        vm.joeys = $scope.joeys;
         vm.grid = '4 4 4';
 		vm.createTableString   = createTableString();
 		vm.createTable         = createTable;
@@ -414,7 +412,6 @@ class BootstrapGridSystem{
                     bootstrapGrid.convert();
                     var page = bootstrapGrid.getPage();
                     vm.pages.push(page);
-                    $scope.joeys = data;
                     Logger.success('New Data successfully created!');
                 } else {
                     vm.errors = createTableToJson.getError();
@@ -426,8 +423,7 @@ class BootstrapGridSystem{
 	}
 
     function createTableString(){
-        return `
-supplier_id number(10) NOT NULL  ,
+        return `supplier_id number(10) NOT NULL  ,
 supplier_name varchar2(50) NOT NULL,
 address varchar2(50),
 city varchar2(50),
