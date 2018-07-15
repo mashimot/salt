@@ -15,8 +15,7 @@
                 model   : '='
             },
             link: link,
-            controller: controller,
-            bindToController: true
+            controller: controller
         };
         function controller($scope){
             $scope.model = model();
@@ -25,9 +24,9 @@
         }
         function link(scope, element, attr){
             scope.$watch('pages', function(pages){
+                var pk = [];
+                var fillable = '';
                 if(pages.length > 0 && pages.length !== undefined){
-                    var pk = [];
-                    var fillable = '';
                     for(var k = 0; k < pages.length; k++){
                         var rows = pages[k].rows;
                         if(rows.length > 0){
@@ -60,12 +59,12 @@
                             }
                         }
                     }
-                    if(pk.length <= 0){
-                        scope.model.sequenceName = '';
-                    }                    
-                    scope.model.primaryKey = pk;
-                    scope.model.fillable = fillable;
                 }
+                if(pk.length <= 0){
+                    scope.model.sequenceName = '';
+                }
+                scope.model.primaryKey = pk;
+                scope.model.fillable = fillable;
             }, true);
         }
         function model(){

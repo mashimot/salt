@@ -20,10 +20,10 @@
             scope.validation = [];
             scope.controller = controller();
             scope.$watch('pages', function(pages) {
+                var validation = '';
+                var rules = '';
+                var inputNiceNames = '';
                 if (pages.length > 0 && pages.length !== undefined) {
-                    var validation = '';
-                    var rules = '';
-                    var inputNiceNames = '';
                     for (var k = 0; k < pages.length; k++) {
                         var rows = pages[k].rows;
                         if (rows.length > 0) {
@@ -78,7 +78,8 @@
                             }
                         }
                     }
-                    validation = `
+                }
+                validation = `
                         $inputNiceNames = [
                             ${inputNiceNames}
                         ];   
@@ -86,8 +87,7 @@
                             ${rules}
                         ];
                     `;
-                    scope.validation = validation;
-                }
+                scope.validation = validation;
             }, true);
         }
         function controller(){
