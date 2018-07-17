@@ -26,24 +26,26 @@
         vmMenu.pageModel = $scope.pageModel;
         vmMenu.bootstrap = [{ "grid": "6 6", "columns": [] }];
         vmMenu.grids = getGrid();
+
         vmMenu.newFile = function(){
-            $scope.$parent.vm.pages = new Array();
+            vmMenu.pages = new Array();
         };
+
         vmMenu.newPage = function(){
             vmMenu.pages.push({rows: [], name: 'Page Name ' + (vmMenu.pages.length + 1) })
         };
 
-        vmMenu.sortableNewPage = {
-            placeholder: 'card p-1 mb-1 bg-primary text-white',
+        vmMenu.newPageSortable = {
+            placeholder: 'card px-1 py-1 mb-1 bg-primary text-white',
             connectWith: '.connected-pages',
             update: function(event, ui){
                 vmMenu.pageModel = angular.copy(vmMenu.pageModel);
             }
         };
 
-        vmMenu.sortableContainers = {
+        vmMenu.gridSortable = {
             connectWith: '.connected-bootstrap-grid',
-            placeholder: 'card p-1 mb-1 bg-primary text-white',
+            placeholder: 'card px-1 py-1 bg-primary text-white',
             update: function(event, ui){
                 var oldModel = ui.item.sortable.model;
                 var textWithoutExtraWhiteSpaces = oldModel.grid.replace(/ +/g, ' ').trim();
@@ -66,15 +68,17 @@
 
         vmMenu.toolSortable = {
             connectWith: '.connected-drop-target-tool',
-            placeholder: 'card p-1 mb-1 bg-primary text-white',
-            //handle: '.tool-handle',
+            placeholder: 'card px-1 py-1 mt-1 bg-primary text-white',
+            handle: '.tool-handle',
             start: function(event, ui){
-                if(typeof ui.item.sortable.model.html !== 'undefined') {
+                ui.item.startHtml = ui.item.html();
+                if(typeof ui.item.sortable.model.html.tag !== 'undefined') {
                     var model = ui.item.sortable.model;
                     RenderHtml.setParams(model);
                     var html = RenderHtml.getHtml();
-                    ui.item.startHtml = ui.item.html();
-                    ui.item.html("<div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9;'>" + html[model.html.tag] + "</div>");
+                    ui.item.removeClass();
+                    ui.item.html("<div class='row'><div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9; width: 100%;'>" + html[model.html.tag] + "</div></div>");
+                    ui.helper.css('width', '120%');
                 }
             },
             stop: function(event, ui){

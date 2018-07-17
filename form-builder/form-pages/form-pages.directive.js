@@ -18,7 +18,7 @@
                 vmPage.renderHtml = $scope.renderHtml;
 				vmPage.sortablePage = {
 		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-		            placeholder: 'p-1 mb-1 bg-primary text-white',
+		            placeholder: 'px-1 py-1 mb-1 bg-primary text-white',
 					//handle: '.page-handle'
 	        	};
 

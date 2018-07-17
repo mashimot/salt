@@ -15,7 +15,7 @@
 				var vmPage 				= $scope.vmPage;
 				
 		        vmColumn.columnSortable = {
-		            placeholder: 'card border border-primary ui-placeholder-highlight',
+		            placeholder: 'card px-1 py-1 mt-1 border border-primary ui-placeholder-highlight',
 					handle: '.column-handle',
 		            start: function(event, ui){
 		                ui.placeholder.addClass(ui.item.attr("class"));

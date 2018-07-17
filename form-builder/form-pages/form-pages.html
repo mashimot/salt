@@ -1,25 +1,25 @@
 <div ng-model="vmPage.pages" class="connected-pages" ui-sortable="vmPage.sortablePage">
-    <div ng-repeat="(pageIndex, page) in vmPage.pages">
-        <div class="row page-handle">
-            <div class="col-md-10">
-                <strong><span ng-bind="page.name" class="text-danger"></span></strong>
-                <small ng-click="vmPage.editPageName[pageIndex] = !vmPage.editPageName[pageIndex]" class="badge btn-outline-danger"  style="cursor: pointer;">
-                    <i class="fa fa-edit fa-1x"></i> edit
-                </small>
-                <div ng-show="vmPage.editPageName[pageIndex]">
-                    <input type="text" class="form-control form-control-sm" placeholder="Page Name" ng-model="page.name"  ng-blur="vmPage.editPageName[pageIndex] = false">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="float-right">
-                    <small ng-click="vmPage.deletePage(pageIndex)" class="badge btn-outline-danger" style="cursor: pointer;">
-                        <i class="fas fa-window-close"></i>
-                        <strong>page <span ng-bind="pageIndex + 1"></span></strong>
+    <div ng-repeat="(pageIndex, page) in vmPage.pages" class="mb-1">
+        <div class="px-3 py-3 border border-dark bg-white text-dark">
+            <div class="row page-handle">
+                <div class="col-md-10">
+                    <strong><span ng-bind="page.name" class="text-danger"></span></strong>
+                    <small ng-click="vmPage.editPageName[pageIndex] = !vmPage.editPageName[pageIndex]" class="badge btn-outline-danger"  style="cursor: pointer;">
+                        <i class="fa fa-edit fa-1x"></i> edit
                     </small>
+                    <div ng-show="vmPage.editPageName[pageIndex]">
+                        <input type="text" class="form-control form-control-sm" placeholder="Page Name" ng-model="page.name"  ng-blur="vmPage.editPageName[pageIndex] = false">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="float-right">
+                        <small ng-click="vmPage.deletePage(pageIndex)" class="badge btn-outline-danger" style="cursor: pointer;">
+                            <i class="fas fa-window-close"></i>
+                            <strong>page <span ng-bind="pageIndex + 1"></span></strong>
+                        </small>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="px-3 py-3 border border-primary bg-white text-dark">
             <form-rows></form-rows>
         </div>
     </div><!--/.ng-repeat-->

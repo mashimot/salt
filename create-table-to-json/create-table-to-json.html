@@ -7,12 +7,12 @@
                         <div class="col-md-8">
                             <uib-tabset type="pills" active="vm.active" justified="true">
                                 <uib-tab index="0" heading="Create Table"> <!-- Create table-->
-                                    <ul  class="list-group" ng-if="vm.errors.length > 0">
-                                        <li ng-repeat="e in vm.errors" class="list-group-item list-group-item-danger">
-                                            <i class="fa fa-bell-o" aria-hidden="true"></i> <span ng-bind="e.message"></span>
-                                        </li>
-                                    </ul>
-                                    <textarea ng-model="vm.createTableString" class="form-control form-control-sm" rows="10"></textarea>
+                                    <textarea ng-model="vm.createTableString" class="form-control form-control-sm" ng-class="{ 'is-invalid' : vm.errors.length > 0 }" rows="10"></textarea>
+                                    <div ng-if="vm.errors.length > 0" class="invalid-feedback">
+                                        <div ng-repeat="e in vm.errors">
+                                            <!--i class="fa fa-bell-o" aria-hidden="true"></i--> <span ng-bind="e.message"></span>
+                                        </div>
+                                    </div>                                    
                                 </uib-tab>
                                 <uib-tab index="1" heading="JSON">
                                     <pre ng-bind="vm.primaryKeys | json"></pre>
@@ -50,6 +50,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="card-footer">
                     <button class="btn btn-primary btn-block" ng-click="vm.createTable(vm.createTableString, form_ct.$valid)">Generate</button>
                 </div>
             </div>

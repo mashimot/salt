@@ -1,8 +1,8 @@
 <section class="sticky-top scrollable">
-    <div class="px-1 py-1">
+    <div class="px-3 py-3 bg-white text-black">
         <div class="row">
             <section id="page" class="col-md-12">
-                <button class="btn btn-outline-success btn-block" ng-click="vmMenu.newFile()">New File</button>
+                <button class="btn btn-success btn-block btn-sm" ng-click="vmMenu.newFile()">New File</button>
                 <form action="http:" method="POST" target="_blank">
                     <button type="submit" class="btn btn-danger btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
                     <input type="hidden" name="json_data" value="{{ vmMenu.data }}">
@@ -24,12 +24,12 @@
         </div>
         <div class="row">
             <section id="containers" class="col-md-12">
-                <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.sortableNewPage">
+                <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.newPageSortable">
                     <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.newPage()" class="btn btn-primary btn-block btn-sm">
                         <i class="fa fa-file"></i> New Page
                     </span>
                 </div>
-                <ng-form name="bootstrap_container" ng-model="vmMenu.bootstrap" ui-sortable="vmMenu.sortableContainers">
+                <ng-form name="bootstrap_container" ng-model="vmMenu.bootstrap" ui-sortable="vmMenu.gridSortable">
                     <div ng-repeat="b in vmMenu.bootstrap">
                         <div ng-if="!bootstrap_container.$invalid">
                             <strong class="badge badge-primary col-md-12" style="cursor: move;">
@@ -71,11 +71,13 @@
             <section id="tools" class="col-md-12 py-1">        
                 <div ng-model="vmMenu.tools">
                     <div ng-repeat="(toolCategoryIndex, toolCategory) in vmMenu.tools | groupBy: 'html.category'">
-                        <strong><span class="text-center text-uppercase" ng-bind="toolCategory[0].html.category"></span></strong>
+                        <strong class="text-center text-uppercase px-2" ng-bind="toolCategory[0].html.category"></strong>
                         <div ng-model="toolCategory" ui-sortable="vmMenu.toolSortable">
-                            <ul ng-repeat="(toolIndex, tool) in toolCategory" class="list-group">
-                                <li ng-bind="tool.html.tag" class="list-group-item"></li>
-                            </ul>
+                            <div ng-repeat="(toolIndex, tool) in toolCategory" class="badge badge-dark col-md-6">
+                                <div class="tool-handle" style="cursor: move;">
+                                    <span ng-bind="tool.html.tag" ></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

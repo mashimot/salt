@@ -143,7 +143,7 @@ class CreateTableToJson {
 
             if(stringArr.length <= 1){
                 this._errors.push({
-                    message: `error`
+                    message: `Incompleted`
                 });
             } else {
                 var lastStrIndex = stringArr.length - 1;

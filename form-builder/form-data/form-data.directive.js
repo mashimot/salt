@@ -18,15 +18,14 @@
                 };
 		        vmData.dataSortable = {
 		            connectWith: '.connected-drop-target-sortable',
-		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-					placeholder: 'p-1 mb-1 bg-primary text-white',
+					placeholder: 'px-1 py-1 mt-1 bg-primary text-white ',
 		            handle: '.data-handle',
+					opacity: 0.3,
 		            cancel: ".unsortable",
                     stop: function(event, ui){
                         Logger.success('Data successfully updated!');
                     }
 		        };				
-				
 			},
 			controllerAs: 'vmData',
             bindToController: true
