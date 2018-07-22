@@ -7,9 +7,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/sandstone/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/materia/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.css">
     <style type="text/css">
+        .bg-gradient {
+            background-image: linear-gradient(120deg, #f5f5f5 0%, #ebedee 100%);
+        }
         .highlight {
             opacity: 0.4;
         }
@@ -46,11 +49,11 @@
     </style>
 </head>
 <body>
-<div class="text-center">
+<div class="jumbotron bg-white text-dark text-center">
     <h1><img src="salt.png" style="width: 300px; height: 300px;" class="img-fluid center-block"> SALT.</h1>
     <h6>A tool for lazy Developers</h6>
 </div>
-<main role="main" ng-controller="CreateTableConverterController as vm">
+<main role="main" ng-controller="CreateTableConverterController as vm" class="bg-gradient">
     <div class="container-fluid">
         <create-table-to-json pages="vm.pages"></create-table-to-json>
         <form-builder>
@@ -64,7 +67,7 @@
             </div>
         </form-builder>
         <section class="pt-3" ng-if="vm.pages.length > 0">
-            <form name="json" class="border border-primary">
+            <form name="json">
                 <div ng-model="vm.pages" ng-repeat="(pageIndex, page) in vm.pages" class="px-2 py-2">
                     <div class="">
                         Page <span ng-bind="pageIndex + 1"></span>
@@ -157,7 +160,7 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="card h-100 border-primary">
+                            <div class="card h-100">
                                 <div class="card-header">
                                     <h1>MODEL</h1>
                                 </div>
@@ -179,7 +182,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="card h-100 border-primary">
+                            <div class="card h-100">
                                 <div class="card-header">
                                     <h1>VIEW</h1>
                                 </div>
@@ -195,7 +198,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="card h-100 border-primary">
+                            <div class="card h-100">
                                 <div class="card-header">
                                     <h1>CONTROLLER</h1>
                                 </div>

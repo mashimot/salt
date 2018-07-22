@@ -28,9 +28,11 @@ class CreateTableToJson {
             //(2) probably the next element -thirdMatch- must have(or not) the size of the columnName (it must be an integer or float)
             if (str.length > 2) { //has 2 elements
                 var thirdMatch = str[2];
-                hasValBtwParen = thirdMatch.match(RegexValBtwParen); //get value between parentheses
-                if(hasValBtwParen !== null) // it goes to the next index if parentheses doesn't exists
-                    this._index = 3;
+                if(thirdMatch.charAt(0) === '('){
+                    hasValBtwParen = thirdMatch.match(RegexValBtwParen); //get value between parentheses
+                    if(hasValBtwParen !== null) // it goes to the next index if parentheses doesn't exists
+                        this._index = 3;
+                }
             }
             //if doesn't contains, the second element of array will be the type
             dataType = secondMatch;

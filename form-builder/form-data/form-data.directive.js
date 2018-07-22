@@ -11,7 +11,7 @@
 			templateUrl: 'form-builder/form-data/form-data.html',
 			controller: function($scope){
 				var vmData = this;
-				vmData.showOptions  	= -1;
+				vmData.showOptions = -1;
 				
                 vmData.deleteData = function(column, dataIndex){
                     column.data.splice(dataIndex, 1);
