@@ -57,9 +57,8 @@
                 
                 function template(){
                     return `
-    <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">
         <div class="modal-header">
-            <h1>Preview</h1>            
+            <h1>Preview</h1>
         </div>
         <div class="modal-body">
             <div class="card">
@@ -67,19 +66,17 @@
                     <render-content data="content"></render-content>
                 </div>
                 <div class="card-body">
-                    <div ng-repeat="(i, tab) in render.tabs" class="py-2">
-                        <h4 ng-bind="tab.title" class="px-3 py-2 bg-danger text-white"></h4>
-                        <span bind-html-compile="tab.template"></span>
-                    </div>
+                    <form name="editModal" ng-submit="ok(editModal.$valid)" method="post">
+                        <div ng-repeat="(i, tab) in render.tabs" class="py-2">
+                            <h4 ng-bind="tab.title" class="px-3 py-2 bg-danger text-white"></h4>
+                            <span bind-html-compile="tab.template"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" >OK</button>
+                        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>                        
+                    </form>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" >OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </form>
-                    `;
+        </div>`;
                 }
 
                 function ConfigModalController($scope, $uibModalInstance, render, data, typeEvent) {

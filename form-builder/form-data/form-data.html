@@ -6,7 +6,7 @@
     <div
         ng-repeat="(dataIndex, data) in column.data"
         ng-class="{
-            'border border-dark bg-white px-2 py-2 mt-1': (vmData.showOptions === vmData.position)
+            'card bg-white px-2 py-2 mt-1': (vmData.showOptions === vmData.position)
         }"
         ng-mouseover="vmData.showOptions = ('' + pageIndex + rowIndex + columnIndex + dataIndex)"
         ng-mouseleave="vmData.showOptions = -1;"
