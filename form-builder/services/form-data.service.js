@@ -17,7 +17,7 @@
           "grid": "12",
           "columns": [
             {
-              "data": [
+              "contents": [
                 {
                   "html": {
                     "tag": "html",
@@ -34,7 +34,7 @@
           "grid": "3 9",
           "columns": [
             {
-              "data": [
+              "contents": [
                 {
                   "html": {
                     "tag": "image",
@@ -46,7 +46,7 @@
               ]
             },
             {
-              "data": [
+              "contents": [
                 {
                   "html": {
                     "tag": "html",

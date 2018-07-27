@@ -1,0 +1,39 @@
+<div
+    ui-sortable="vmContent.contentSortable"
+    ng-model="column.contents"
+    class="connected-drop-target-sortable connected-drop-target-tool apps-container"
+>
+    <div
+        ng-repeat="(contentIndex, content) in column.contents"
+        ng-class="{
+            'card bg-white px-2 py-2 mt-1': (vmContent.showOptions === vmContent.position)
+        }"
+        ng-mouseover="vmContent.showOptions = ('' + pageIndex + rowIndex + columnIndex + contentindex)"
+        ng-mouseleave="vmContent.showOptions = -1;"
+    >
+        <div class="row">
+            <div class="col-md-12 content-handle">
+                <span ng-bind="vmContent.position = ('' + pageIndex + rowIndex + columnIndex + contentindex)" style="display: none;"></span>
+                <div ng-if="vmContent.showOptions === vmContent.position">
+                    <div class="row content-handle">
+                        <div class="col-md-6">
+                            <div class="float-left">
+                                <span edit-form-builder-data data="content" type-event="edit" class="badge btn-outline-primary">
+                                    <i class="fa fa-edit fa-1x"></i> edit
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="float-right">
+                                <span ng-click="vmContent.deleteContent(column, contentindex)" class="badge btn-outline-danger" style="cursor: pointer;">
+                                    <i class="fas fa-window-close"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <render-content data="content" class="content-handle"></render-content>
+            </div>
+        </div>
+    </div>
+</div>

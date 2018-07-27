@@ -12,20 +12,7 @@
 				pages: '=pages',
                 renderHtml: '='
 			},
-			controller: function($scope){
-				var vmPage = this;
-				vmPage.pages = $scope.pages;
-                vmPage.renderHtml = $scope.renderHtml;
-				vmPage.sortablePage = {
-		            //placeholder: 'card border border-primary ui-placeholder-highlight',
-		            placeholder: 'px-1 py-1 mb-1 bg-primary text-white',
-					//handle: '.page-handle'
-	        	};
-
-				vmPage.deletePage = function(index){
-                    vmPage.pages.splice(index, 1);
-				}
-			},
+			controller: 'FormPageController',
 			controllerAs: 'vmPage',
             bindToController: true
 		}	

@@ -355,7 +355,7 @@ class BootstrapGridSystem{
             group.map(function(data, i){
                 count++;
                 return page.rows[index].columns.push({
-                    data: [data]
+                    contents: [data]
                 });
             }, 0);
             return page;
@@ -365,7 +365,7 @@ class BootstrapGridSystem{
         if(columns.length < chunkSize){
             for(var k = columns.length; k < chunkSize; k++){
                 this._page.rows[lastRow - 1].columns.push({
-                    data: []
+                    contents: []
                 })
             }
         }
