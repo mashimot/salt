@@ -2,7 +2,7 @@
 	angular.module('app')
 	.controller('FormContentController', FormContentController);
 	
-	FormContentController.$inject = [];
+	FormContentController.$inject = ['Logger'];
 
 	function FormContentController(Logger){
 		var vmContent = this;
