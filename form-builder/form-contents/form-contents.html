@@ -8,12 +8,12 @@
         ng-class="{
             'card bg-white px-2 py-2 mt-1': (vmContent.showOptions === vmContent.position)
         }"
-        ng-mouseover="vmContent.showOptions = ('' + pageIndex + rowIndex + columnIndex + contentindex)"
+        ng-mouseover="vmContent.showOptions = ('' + pageIndex + rowIndex + columnIndex + contentIndex)"
         ng-mouseleave="vmContent.showOptions = -1;"
     >
         <div class="row">
             <div class="col-md-12 content-handle">
-                <span ng-bind="vmContent.position = ('' + pageIndex + rowIndex + columnIndex + contentindex)" style="display: none;"></span>
+                <span ng-bind="vmContent.position = ('' + pageIndex + rowIndex + columnIndex + contentIndex)" style="display: none;"></span>
                 <div ng-if="vmContent.showOptions === vmContent.position">
                     <div class="row content-handle">
                         <div class="col-md-6">

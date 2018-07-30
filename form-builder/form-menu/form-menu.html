@@ -2,9 +2,9 @@
     <div class="px-3 py-3 card bg-white text-black">
         <div class="row">
             <section id="page" class="col-md-12">
-                <button class="btn btn-success btn-block btn-sm" ng-click="vmMenu.newFile()">New File</button>
+                <button class="btn btn-primary btn-block btn-sm" ng-click="vmMenu.newFile()">New File</button>
                 <form action="http:" method="POST" target="_blank">
-                    <button type="submit" class="btn btn-danger btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
                     <input type="hidden" name="json_data" value="{{ vmMenu.data }}">
                 </form>
                 <div id="table-inputs">
@@ -19,7 +19,7 @@
                         <option value="tab">tab</option>
                         <option value="single page">single page</option>
                     </select>
-                </div>                        
+                </div>
             </section>
         </div>
         <div class="row">
@@ -33,7 +33,7 @@
                     <div ng-repeat="b in vmMenu.bootstrap">
                         <div ng-if="!bootstrap_container.$invalid">
                             <strong class="badge badge-primary col-md-12" style="cursor: move;">
-                                <i class="fa fa-arrows-alt fa-1x"></i> GRID 
+                                <i class="fa fa-arrows-alt fa-1x"></i> GRID
                                 [ <span ng-bind="b.grid"></span> ]
                             </strong>
                         </div>
