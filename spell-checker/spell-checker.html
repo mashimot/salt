@@ -21,7 +21,7 @@
                     <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
                         <label>{{ match.message }}</label>
                         <select multiple class="form-control" disabled>
-                            <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
+                            <option ng-repeat="(rK, r) in match.replacements" ng-bind="r.value">
                             </option>
                         </select>
                     </div>

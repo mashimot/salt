@@ -45,25 +45,12 @@
 		}
 
 		function SpellCheckerController($scope, $uibModalInstance, text, LanguageToolService) {
-            //$scope.text = text;
             $scope.result = [];
             $scope.text = {
             	value: text
             };
 
             spellChecker();
-
-            $scope.newWord = function(res, index, newWord){
-                res.text = newWord;
-                var words = [];
-                if(res.data.length > 0){
-                    for(var i = 0; i < res.data.length; i++){
-                        var word = res.data[i].word;
-                        words.push(word);
-                    }
-                    res.text = words.join(' ');
-                }
-            };
 
             $scope.spellChecker = spellChecker;
 
@@ -72,7 +59,7 @@
             };
 
             $scope.cancel = function() {
-                $uibModalInstance.close();
+                $uibModalInstance.dismiss();
             };
 
             function langTool(){

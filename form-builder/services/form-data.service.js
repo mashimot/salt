@@ -51,7 +51,7 @@
                   "html": {
                     "tag": "html",
                     "category": "html",
-                    "data": "<p class=\"f3\">This project was made with Angular 1.7.0.</p>\n<p>It's been in development since December 2017 and is <strong>currently being developed.</strong></p>"
+                    "data": "<p class=\"f3\">This project was made with Angular 1.7.2.</p>\n<p>It's been in development since December 2017 and is <strong>currently being developed.</strong></p>"
                   },
                   "table": {}
                 }
