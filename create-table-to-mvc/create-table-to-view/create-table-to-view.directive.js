@@ -1,20 +1,12 @@
 (function(){
     'use strict';
 
-    angular.module('new.app')
+    angular.module('app')
         .directive('sqlToView', SqlToView);
       SqlToView.$inject = ['RenderHtml', 'renderView'];
 
       function SqlToView(RenderHtml, renderView){
         return {
-            //templateUrl: templateUrl,
-            /*template: `
-            <div class="form-group">
-                <div class="radio" ng-repeat="ff in frontEndFrameworks">
-                    <label><input type="radio" name="front_end_framework" ng-model="frontEnd.selected" ng-value="ff"> {{ ff.name }}</label>
-                </div>
-            </div>
-            <div ng-init="tplUrl = templateUrl()" ng-include="tplUrl"></div>`,*/
             templateUrl: 'create-table-to-mvc/create-table-to-view/view.html',
             restrict: 'E',
             scope: {

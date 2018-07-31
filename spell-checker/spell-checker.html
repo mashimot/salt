@@ -1,0 +1,35 @@
+    <div class="modal-header">
+        <div class="text-left">
+            <h4>Spell Checker</h4>
+        </div>
+        <div class="text-right">
+            <button type="button" class="close" aria-label="Close" ng-click="cancel()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div ng-if="isLoading" class="text-center" style="margin-top: 40px;">
+            <i class="fa fa-cog fa-spin fa-2x"></i> Loading...
+        </div>
+        <div ng-if="!isLoading">
+            <div id="spell-checker" class="py-3">
+                <spell-checker text="text.value"><spell-checker>
+            </div>
+            <div class="px-2 py-2" ng-repeat="(key, res) in result" ng-model="result">
+                <div class="row">
+                    <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
+                        <label>{{ match.message }}</label>
+                        <select multiple class="form-control" disabled>
+                            <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" ng-if="!isLoading">
+            <button type="button" class="btn btn-primary" ng-click="save()">Save Changes</button>
+            <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>

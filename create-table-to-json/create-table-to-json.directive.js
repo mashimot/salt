@@ -414,6 +414,7 @@ class BootstrapGridSystem{
                     bootstrapGrid.convert();
                     var page = bootstrapGrid.getPage();
                     vm.pages.push(page);
+                    console.log(vm.pages);
                     Logger.success('New Data successfully created!');
                 } else {
                     vm.errors = createTableToJson.getError();

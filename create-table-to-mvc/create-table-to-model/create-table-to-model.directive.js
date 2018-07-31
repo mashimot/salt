@@ -1,7 +1,7 @@
 (function(){
     'use strict';
     
-    angular.module('new.app')
+    angular.module('app')
         .directive('sqlToModel', SqlToModel);
         SqlToModel.$inject = ['$timeout'];
 

@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Salt</title>
-
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
@@ -73,13 +71,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.19.0/sortable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
 
-<script>
-    angular.module('app', ['new.app', 'ui.router', 'ui-notification', 'blocks.logger', 'ui.bootstrap', 'ui.sortable', 'render.nested.html', 'bind.html.compile', 'angular.filter', 'collection.service' , 'ngMessages', 'ngSanitize', 'ngAnimate']);
-    angular.module('new.app', []);
-</script>
-
 <!-- Route -->
-<script src="config/config.routes.js"></script>
+<script src="app.js"></script>
 
 <!-- common directives -->
 <script src="common/directives/camelcase.directive.js"></script>
@@ -95,15 +88,20 @@
 <script src="common/services/render-html.service.js"></script>
 <script src="common/services/language-tool.service.js"></script>
 
-<!--script src="config/config.routes.js"></script-->
+
+<script src="spell-checker/spell-checker.directive.js"></script>
+
 <script src="create-table-to-json/create-table-to-json.directive.js"></script>
 
 <script src="create-table-to-mvc/create-table-to-model/create-table-to-model.directive.js"></script>
 <script src="create-table-to-mvc/create-table-to-view/create-table-to-view.directive.js"></script>
 <script src="create-table-to-mvc/create-table-to-controller/create-table-to-controller.directive.js"></script>
-    
+
+<!-- Form Builder Router -->
+<script src="form-builder/config/config.routes.js"></script>
+
 <!-- Form Builder Controller -->
-<script src="form-builder/create-table-converter.controller.js"></script>
+<script src="form-builder/form-builder.controller.js"></script>
 
 <script src="form-builder/form-rows/form-rows.controller.js"></script>
 <script src="form-builder/form-rows/form-rows.directive.js"></script>
@@ -130,62 +128,13 @@
 <script src="form-builder/modal/config/config.html-editor.client.directive.js"></script>
 <script src="form-builder/modal/tab.content.service.js"></script>
 
-<script src="form-builder/render-content.directive.js"></script>
+<script src="form-builder/render-content/render-content.directive.js"></script>
 
 <script src="form-builder/services/form-data.service.js"></script>
 <script src="form-builder/services/html-elements.service.js"></script>
 
-<script type="text/ng-template" id="dialog1.tmpl.html">
-    <div class="modal-corretor-ortografia">
-        <div class="modal-header">
-            <div class="text-left">
-                <h4 >Correção Ortográfica</h4>
-            </div>
-            <div class="text-center">
-                <button type="button" ng-click="corretorOrtografico()" class="btn btn-outline-info">
-                    <i class="fa fa-book"></i>
-                </button>
-            </div>
-            <div class="text-right">
-                <button type="button" class="close" aria-label="Close" ng-click="cancel()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        <div class="modal-body">
-            <div ng-if="isLoading" class="text-center" style="margin-top: 40px;">
-                <i class="fa fa-cog fa-spin fa-2x"></i> Loading...
-            </div>
-            <div ng-if="!isLoading">
-                <div class="px-2 py-2 text-white" ng-class="{ 'bg-danger': res.langTool.matches.length > 0, 'bg-success': res.langTool.matches.length <= 0 }" ng-repeat="(key, res) in result" ng-model="result">
-                    <div class="form-group">
-                        <label for="text-{{ key }}"><span ng-bind="res.text"></span></label>
-                        <div class="input-group">
-                            <input type="text" ng-model="res.text" ng-change="split(res.text)" id="text-{{ key }}" class="form-control form-control-sm">
-                            <div class="input-group-append">
-                                <button ng-click="atualizar(res)" class="btn btn-info btn-sm" type="button">
-                                    Atualizar <i class="fa fa-book fa-1x" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div ng-repeat="(mK, match) in res.langTool.matches" ng-if="res.langTool.matches.length > 0" class="form-group col-md-6">
-                            <label>{{ match.message }}</label>
-                            <select multiple class="form-control">
-                                <option ng-repeat="(rK, r) in match.replacements" ng-click="newWord(res, i, r.value)" ng-bind="r.value">
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer" ng-if="!isLoading">
-                <button type="button" class="btn btn-primary" ng-click="atualizar()">Salvar Mudanças</button>
-                <button type="button" class="btn btn-secondary" ng-click="cancel()">Cancelar</button>
-            </div>
-        </div>
-    </div>
+<script type="text/ng-template" id="spell-checker.tmpl.html">
+
 </script>
 </body>
 </html>

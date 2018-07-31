@@ -1,6 +1,6 @@
 (function(){
     'use strict';
-    angular.module('new.app')
+    angular.module('app')
     .directive('sqlToController', SqlToController);
 
     function SqlToController() {
