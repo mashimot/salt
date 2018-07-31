@@ -19,7 +19,7 @@
     bootstrapConfig.$inject = ['$stateProvider', "$urlRouterProvider", "$locationProvider"];
     //angular.module('new.app', []);
     function bootstrapConfig($stateProvider, $urlRouterProvider, $locationProvider){
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/salt');
         $stateProvider
         .state('app', {
             url: '/',
