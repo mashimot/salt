@@ -1,0 +1,87 @@
+<section class="sticky-top scrollable">
+    <div class="px-3 py-3 card bg-white text-black">
+        <div class="row">
+            <section id="page" class="col-md-12">
+                <button class="btn btn-primary btn-block btn-sm" ng-click="vmMenu.newFile()">New File</button>
+                <form action="http:" method="POST" target="_blank">
+                    <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fa fa-eye"></i> Preview</button>
+                    <input type="hidden" name="json_data" value="{{ vmMenu.data }}">
+                </form>
+                <div id="table-inputs">
+                    <div ng-model="vmMenu.tableInputs" ui-sortable="vmMenu.toolSortable">
+                        <div ng-repeat="t in vmMenu.tableInputs">
+                            <span ng-bind="t.table.columnName" class="form-control form-control-sm tool-handle" style="cursor: pointer" ></span>
+                        </div>
+                    </div>
+                </div>                        
+                <div class="form-group">
+                    <select ng-model="vmMenu.data.type" id="data-type" class="form-control form-control-sm">
+                        <option value="tab">tab</option>
+                        <option value="single page">single page</option>
+                    </select>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section id="containers" class="col-md-12">
+                <div ng-model="vmMenu.pageModel" ui-sortable="vmMenu.newPageSortable">
+                    <span ng-model="vmMenu.pageModel" ng-repeat="pM in vmMenu.pageModel" ng-click="vmMenu.newPage()" class="badge badge-primary col-md-12">
+                        <i class="fa fa-file"></i> New Page
+                    </span>
+                </div>
+                <ng-form name="bootstrap_container" ng-model="vmMenu.bootstrap" ui-sortable="vmMenu.gridSortable">
+                    <div ng-repeat="b in vmMenu.bootstrap">
+                        <div ng-if="!bootstrap_container.$invalid">
+                            <strong class="badge badge-primary col-md-12" style="cursor: move;">
+                                <i class="fa fa-arrows-alt fa-1x"></i> GRID
+                                [ <span ng-bind="b.grid"></span> ]
+                            </strong>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <input type="text"
+                                   name="grid"
+                                   ng-model="b.grid"
+                                   ng-required="true"
+                                   ng-pattern="/^[0-9 ]*$/"
+                                   sum-validation="container.text"
+                                   sum-be-equal-to="12"
+                                   class="form-control form-control-sm"
+                                   style="cursor: pointer"
+                                   aria-label="Text input with dropdown button"
+                                   ng-class="{ 'is-invalid': !bootstrap_container.$valid }"
+                            >
+
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Grid</button>
+                                <div class="dropdown-menu">
+                                    <button type="button" class="dropdown-item" ng-repeat="container in vmMenu.grids" ng-bind="container.grid" ng-click="vmMenu.bootstrap[0] = container"></button>
+                                </div>
+                            </div>
+                            <div ng-messages="bootstrap_container.$error" class="invalid-feedback">
+                                <div ng-message="required">* Enter with your grid, the sum must be 12. Ex: 4 4 4!</div>
+                                <div ng-message="pattern">* Allows only numbers and space</div>
+                                <div ng-message="isSumEqualsTo">* The sum must be equals to 12</div>
+                            </div>                            
+                        </div>
+                    </div>
+                </ng-form>
+            </section>
+        </div>
+        <div class="row">
+            <section id="tools" class="col-md-12 py-1">        
+                <div ng-model="vmMenu.tools">
+                    <div ng-repeat="(toolCategoryIndex, toolCategory) in vmMenu.tools | groupBy: 'html.category'">
+                        <strong class="text-center text-uppercase px-2" ng-bind="toolCategory[0].html.category"></strong>
+                        <div ng-model="toolCategory" ui-sortable="vmMenu.toolSortable">
+                            <div ng-repeat="(toolIndex, tool) in toolCategory" class="badge col-md-6 text-white" style="background-color: black;">
+                                <div class="tool-handle" style="cursor: move;">
+                                    <span ng-bind="tool.html.tag" ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>    
+    </div>
+</section>

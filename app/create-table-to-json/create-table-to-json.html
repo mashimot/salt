@@ -1,0 +1,60 @@
+<ng-form name="form_ct">
+    <section class="row py-3">
+       <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <uib-tabset type="pills" active="vm.active" justified="true">
+                                <uib-tab index="0" heading="Create Table"> <!-- Create table-->
+                                    <textarea ng-model="vm.createTableString" class="form-control form-control-sm h-100" ng-class="{ 'is-invalid' : vm.errors.length > 0 }" rows="10"></textarea>
+                                    <div ng-if="vm.errors.length > 0" class="invalid-feedback">
+                                        <div ng-repeat="e in vm.errors">
+                                            <!--i class="fa fa-bell-o" aria-hidden="true"></i--> <span ng-bind="e.message"></span>
+                                        </div>
+                                    </div>                                    
+                                </uib-tab>
+                                <uib-tab index="1" heading="JSON">
+                                    <pre ng-bind="vm.primaryKeys | json"></pre>
+                                    <pre ng-bind="vm.pages | json"></pre>
+                                </uib-tab>
+                            </uib-tabset>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="form_ct_database">Database</label>
+                                <select id="form_ct_database" class="form-control" ng-model="vm.options.database">
+                                    <option ng-repeat="db in vm.database">{{ db }}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="form_ct_grid">Bootstrap Grid</label>
+                                <input type="text"
+                                    name="grid"
+                                    id="form_ct_grid"
+                                    ng-model="vm.grid"
+                                    ng-required="true"
+                                    ng-pattern="/^[0-9 ]*$/"
+                                    sum-validation="vm.grid"
+                                    sum-be-equal-to="12"
+                                    class="form-control form-control-sm"
+                                    style="cursor: pointer"
+                                    aria-label="Text input with dropdown button"
+                                    ng-class="{ 'is-invalid': !form_ct.$valid }"
+                                >
+                                <div ng-messages="form_ct.$error" class="invalid-feedback">
+                                    <div ng-message="required">* Enter with your grid, the sum must be 12. Ex: 4 4 4!</div>
+                                    <div ng-message="pattern">* Allows only numbers and space</div>
+                                    <div ng-message="isSumEqualsTo">* The sum must be equals to 12</div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-block" ng-click="vm.createTable(vm.createTableString, form_ct.$valid)">Generate</button>
+                </div>
+            </div>
+        </div>            
+    </section>
+</ng-form>                    

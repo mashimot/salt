@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Salt</title>
+    <link rel="stylesheet" type="text/css" href="public/assets/css/app.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <style type="text/css">
+        .bg-gradient {
+            background-image: linear-gradient(120deg, #f5f5f5 0%, #ebedee 100%);
+        }
+        .highlight {
+            opacity: 0.4;
+        }
+        .sort-order:after {
+            content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+        }
+        .ui-placeholder-highlight:before {
+            content: 'Drop Zone';
+        }
+        .ui-placeholder-highlight {
+            font-size: 30px;
+            text-align: center;
+        }
+        .sort-order.reverse:after {
+            content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+        }
+        .apps-container {
+            min-height:50px;
+        }
+        .app {
+            width: 170px;
+            padding: 5px 10px;
+            margin: 5px 0;
+            border: 2px solid #444;
+            border-radius: 5px;
+            background-color: #EA8A8A;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-align: center;
+            cursor: move;
+        }
+    </style>    
+</head>
+<body>
+
+<div ui-view="menu"></div>
+<div class="bg-gradient">
+    <div ui-view="content"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.19/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-notification/0.3.6/angular-ui-notification.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.19.0/sortable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
+<script src="public/assets/js/app.min.js"></script>
+</body>
+</html>

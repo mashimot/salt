@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label for="title-text">Image source</label>
+    <input
+        type="text"
+        id="img-src"
+        name="src"
+        ng-model="content.html.src"
+        ng-minlength="5"
+        class="form-control"
+        ng-class="{ 'is-invalid': !formName.$valid }"
+        required
+    />
+    <div ng-messages="formName.$error" class="invalid-feedback">
+        <div ng-message="required">You did not enter a field</div>
+    </div>
+</div>

@@ -3,7 +3,7 @@
 A tool for lazy developers
 
 DEMO:
-https://mashimot.github.io/salt/
+https://mashimot.github.io/salt/app/
 
 # Features
 
