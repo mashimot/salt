@@ -17,7 +17,7 @@
 				scope.result = function(){
 					var data = scope.data;
 					RenderHtml.setParams(data);
-					var result = RenderHtml.getHtml()[data.html.tag];
+					var result = RenderHtml.get();
 					if(typeof result !== 'undefined'){
 						var required = '';
 

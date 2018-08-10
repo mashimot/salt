@@ -6,7 +6,6 @@ angular.module('app')
 	RenderHtml.$inject = [];
 	function RenderHtml(){
 
-        var name        = '';
         var name = '';
         var nullable    = false;
         var labelName   = '';
@@ -20,7 +19,7 @@ angular.module('app')
 		var service = {
             render : render,
             setParams : setParams,
-            getHtml :  _default
+            get :  get
 		};
 		return service;
 
@@ -48,7 +47,12 @@ angular.module('app')
             return partialView;
         }
 
-        function _default(){
+        function get(){
+            var h = html();
+            return h[inputType];
+        }
+
+        function html(){
             return {
                 "html": `${htmlData}`,
                 "legend": `<legend>${text}</legend>`,

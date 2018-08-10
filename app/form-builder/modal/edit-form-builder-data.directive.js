@@ -17,7 +17,6 @@
                     var tag = scope.data.html.tag;
                     scope.render = render[tag];
                     scope.content = scope.data;
-                    console.log(scope.teste);
                     save(scope.data, scope.typeEvent).result.then(function(result){
                         if(result.success){
                             angular.copy(result.content, scope.data);

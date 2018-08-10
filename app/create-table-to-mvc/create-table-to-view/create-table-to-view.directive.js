@@ -45,7 +45,7 @@
                                             for(var m = 0; m < contents.length; m++){
                                                 var d = contents[m];
                                                 RenderHtml.setParams(d);
-                                                dataHtml += "\n\t\t\t" + RenderHtml.getHtml()[d.html.tag];
+                                                dataHtml += "\n\t\t\t" + RenderHtml.get();
                                             }
                                         }
                                         columnHtml += `\n\t\t<div class="col-md-${grid[j]}">${dataHtml}\n\t\t</div>`;

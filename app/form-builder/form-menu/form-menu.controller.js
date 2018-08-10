@@ -61,9 +61,9 @@
                 if(typeof ui.item.sortable.model.html.tag !== 'undefined') {
                     var model = ui.item.sortable.model;
                     RenderHtml.setParams(model);
-                    var html = RenderHtml.getHtml();
+                    var html = RenderHtml.get();
                     ui.item.removeClass().css("background-color", ""); 
-                    ui.item.html("<div class='row'><div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9; width: 100%; color: black;'>" + html[model.html.tag] + "</div></div>");
+                    ui.item.html("<div class='row'><div class='px-3 py-3 bg-white border border-primary' style='opacity: 0.9; width: 100%; color: black;'>" + html + "</div></div>");
                     ui.helper.css('width', '120%');
                 }
             },
